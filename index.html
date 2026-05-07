@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>수능특강 EBS-13 | 에듀케레 영수학원</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:wght@600;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans KR',sans-serif;background:#f5f5f0;color:#1a2744;line-height:1.7}
+.app{display:flex;min-height:100vh}
+.sidebar{width:280px;background:#1a2744;color:#fff;padding:30px 20px;position:fixed;height:100vh;overflow-y:auto}
+.sidebar h1{font-family:'Playfair Display',serif;font-size:24px;color:#c8a84b;margin-bottom:6px;letter-spacing:1px}
+.sidebar .subtitle{font-size:13px;color:#c8a84b;margin-bottom:4px;font-weight:500}
+.sidebar .academy{font-size:12px;color:#aaa;margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid #2a3754}
+.sidebar .menu-title{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:2px;margin-bottom:12px}
+.passage-btn{display:block;width:100%;padding:14px 16px;background:transparent;border:1px solid #2a3754;color:#ddd;text-align:left;cursor:pointer;margin-bottom:8px;border-radius:6px;font-family:'Noto Sans KR',sans-serif;font-size:14px;transition:all 0.2s}
+.passage-btn:hover{background:#2a3754;border-color:#c8a84b}
+.passage-btn.active{background:#c8a84b;color:#1a2744;border-color:#c8a84b;font-weight:600}
+.passage-btn .num{font-family:'Playfair Display',serif;font-size:16px;margin-right:8px;color:#c8a84b}
+.passage-btn.active .num{color:#1a2744}
+.passage-btn .title{font-size:12px;display:block;margin-top:3px;opacity:0.8}
+.main{margin-left:280px;flex:1;padding:40px 50px}
+.passage{display:none}
+.passage.active{display:block}
+.passage-header{margin-bottom:24px;padding-bottom:18px;border-bottom:2px solid #c8a84b}
+.passage-header h2{font-family:'Playfair Display',serif;font-size:32px;color:#1a2744;margin-bottom:6px}
+.passage-header .subj{font-size:14px;color:#7a6a3a;font-weight:500}
+.tabs{display:flex;gap:4px;margin-bottom:24px;flex-wrap:wrap;border-bottom:1px solid #ddd;padding-bottom:0}
+.tab-btn{padding:10px 16px;background:transparent;border:none;color:#666;cursor:pointer;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:500;border-bottom:3px solid transparent;transition:all 0.2s}
+.tab-btn:hover{color:#1a2744}
+.tab-btn.active{color:#1a2744;border-bottom-color:#c8a84b;font-weight:600}
+.tab-content{display:none;background:#fff;padding:30px 36px;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,0.05)}
+.tab-content.active{display:block}
+.tab-content h3{font-family:'Playfair Display',serif;font-size:22px;color:#1a2744;margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid #eee}
+.full-passage-box{border:2px solid #1a2744;background:#fafaf5;padding:24px 28px;border-radius:6px;font-family:'EB Garamond',serif;font-size:17pt;line-height:1.85;color:#1a2744}
+.sentence-block{margin-bottom:30px;padding-bottom:24px;border-bottom:1px dashed #e0d8c0}
+.sentence-block:last-child{border-bottom:none}
+.sent-num{display:inline-block;width:28px;height:28px;line-height:28px;text-align:center;background:#1a2744;color:#c8a84b;border-radius:50%;font-family:'Playfair Display',serif;font-weight:700;margin-right:10px;font-size:14px}
+.sent-en{font-family:'EB Garamond',serif;font-size:16pt;color:#1a2744;line-height:1.7;margin-bottom:14px;padding:14px 18px;background:#fafaf5;border-left:4px solid #c8a84b;border-radius:4px}
+.sent-slash{font-family:'EB Garamond',serif;font-size:14pt;color:#555;margin-bottom:8px;font-style:italic}
+.sent-ko{font-size:15px;color:#333;margin-bottom:12px;padding-left:12px;border-left:2px solid #c8a84b}
+.gram-list{margin-top:10px;padding-left:8px}
+.gram-item{margin-bottom:8px;font-size:14px;line-height:1.7}
+.gram-item .gtitle{color:#1a2744;font-weight:600}
+.gram-item .gex{color:#555;font-style:italic;font-family:'EB Garamond',serif;font-size:14pt}
+.gram-item .gpoint{color:#7a6a3a;background:#fdf6dc;padding:2px 8px;border-radius:3px;font-size:13px}
+.vocab-list{display:flex;flex-direction:column;gap:10px}
+.vocab-item{display:grid;grid-template-columns:200px 90px 1fr;gap:14px;padding:12px 16px;background:#f7f4e8;border-left:3px solid #c8a84b;border-radius:4px;align-items:center}
+.vocab-en{font-family:'EB Garamond',serif;font-size:16pt;font-weight:600;color:#1a2744}
+.vocab-pos{font-family:'EB Garamond',serif;font-style:italic;color:#7a6a3a;font-size:14px}
+.vocab-ko{color:#333;font-size:14px}
+.vocab-deriv{grid-column:1/-1;font-size:13px;color:#666;font-family:'EB Garamond',serif;padding-top:6px;border-top:1px dashed #d4c89a;margin-top:4px}
+.translation{font-size:15.5px;line-height:1.95;color:#222;text-align:justify;padding:20px 24px;background:#fafaf5;border-radius:6px;border-left:4px solid #c8a84b}
+.theme-block{margin-bottom:22px}
+.theme-block h4{font-size:15px;color:#c8a84b;font-weight:700;margin-bottom:8px;letter-spacing:1px;text-transform:uppercase;font-family:'Playfair Display',serif}
+.theme-block .content{font-size:15px;line-height:1.8;color:#333;padding:14px 18px;background:#fafaf5;border-left:3px solid #c8a84b;border-radius:4px}
+.struct-flow{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+.struct-step{padding:12px 16px;background:#fafaf5;border-left:3px solid #c8a84b;border-radius:4px;font-size:14.5px}
+.struct-step b{color:#1a2744}
+.bg-block{background:#fafaf5;padding:20px 24px;border-radius:6px;border-left:4px solid #c8a84b;font-size:15px;line-height:1.9;color:#333}
+.bg-block h4{font-size:15px;color:#1a2744;font-weight:700;margin-bottom:8px;margin-top:14px}
+.bg-block h4:first-child{margin-top:0}
+.quiz-q{margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid #eee}
+.quiz-q:last-child{border-bottom:none}
+.q-title{font-size:15px;font-weight:700;color:#1a2744;margin-bottom:10px}
+.q-stem{font-size:14.5px;color:#333;margin-bottom:14px;padding:14px 16px;background:#fafaf5;border-radius:4px;line-height:1.8}
+.q-stem.en{font-family:'EB Garamond',serif;font-size:15pt}
+.q-options{display:flex;flex-direction:column;gap:6px}
+.q-opt{padding:11px 16px;background:#fff;border:1px solid #ddd;border-radius:4px;cursor:pointer;font-size:14px;text-align:left;transition:all 0.15s;font-family:inherit;line-height:1.6}
+.q-opt:hover{background:#f7f4e8;border-color:#c8a84b}
+.q-opt.correct{background:#e8f5e8;border-color:#4a7c4a;color:#2d5a2d}
+.q-opt.wrong{background:#fce8e8;border-color:#a14a4a;color:#7a2828}
+.q-opt .onum{display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#1a2744;color:#fff;border-radius:50%;font-size:12px;margin-right:10px;font-weight:600}
+.q-opt.correct .onum{background:#4a7c4a}
+.q-opt.wrong .onum{background:#a14a4a}
+.q-fb{margin-top:12px;padding:10px 14px;border-radius:4px;font-size:13.5px;display:none;line-height:1.7}
+.q-fb.show{display:block}
+.q-fb.right{background:#e8f5e8;color:#2d5a2d;border-left:3px solid #4a7c4a}
+.q-fb.wr{background:#fce8e8;color:#7a2828;border-left:3px solid #a14a4a}
+.q-reset{margin-top:8px;padding:6px 12px;background:transparent;border:1px solid #c8a84b;color:#7a6a3a;border-radius:4px;cursor:pointer;font-size:12px}
+.q-reset:hover{background:#c8a84b;color:#fff}
+.essay-q{margin-bottom:30px;padding:20px 22px;background:#fafaf5;border-radius:6px;border-left:4px solid #1a2744}
+.essay-q .et{font-weight:700;color:#1a2744;font-size:15px;margin-bottom:10px}
+.essay-q .es{font-size:14.5px;color:#333;line-height:1.8;margin-bottom:8px}
+.essay-q .ec{font-size:13px;color:#7a6a3a;background:#fdf6dc;padding:6px 10px;border-radius:3px;display:inline-block;margin-bottom:12px}
+.essay-q textarea{width:100%;min-height:90px;padding:12px;border:1px solid #d4c89a;border-radius:4px;font-family:inherit;font-size:14px;line-height:1.7;resize:vertical;background:#fff}
+.essay-q textarea:focus{outline:none;border-color:#c8a84b}
+.essay-q .ans-toggle{margin-top:10px;padding:7px 14px;background:#1a2744;color:#c8a84b;border:none;border-radius:4px;cursor:pointer;font-size:13px;font-family:inherit}
+.essay-q .ans-toggle:hover{background:#2a3754}
+.essay-q .model-ans{display:none;margin-top:12px;padding:14px 16px;background:#fff;border:1px dashed #c8a84b;border-radius:4px;font-size:14px;line-height:1.8;color:#333}
+.essay-q .model-ans.show{display:block}
+.essay-q .model-ans b{color:#1a2744}
+@media(max-width:900px){.app{flex-direction:column}.sidebar{position:relative;width:100%;height:auto}.main{margin-left:0;padding:24px 20px}.vocab-item{grid-template-columns:1fr 80px 1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="sidebar">
+<h1>EBS-13</h1>
+<div class="subtitle">수능특강 영어</div>
+<div class="academy">에듀케레 영수학원</div>
+<div class="menu-title">지문 선택</div>
+<button class="passage-btn active" onclick="showPassage(0)"><span class="num">G</span>Grain Trade Firms<span class="title">곡물 무역과 정보 우위</span></button>
+<button class="passage-btn" onclick="showPassage(1)"><span class="num">1</span>Aristotle on Nature<span class="title">자연의 목적론</span></button>
+<button class="passage-btn" onclick="showPassage(2)"><span class="num">2</span>AI Idea Generator<span class="title">창의성과 아이디어 양</span></button>
+<button class="passage-btn" onclick="showPassage(3)"><span class="num">3</span>Interoception &amp; Empathy<span class="title">신체 감각과 공감</span></button>
+<button class="passage-btn" onclick="showPassage(4)"><span class="num">4</span>Tech Dehumanization<span class="title">기술과 인간성 상실</span></button>
+</div>
+<div class="main" id="main">
+<script>
+function showPassage(n){
+  var ps=document.getElementsByClassName('passage');
+  for(var i=0;i<ps.length;i++){ps[i].className=ps[i].className.replace(' active','');}
+  document.getElementById('p'+n).className='passage active';
+  var bs=document.getElementsByClassName('passage-btn');
+  for(var i=0;i<bs.length;i++){bs[i].className=bs[i].className.replace(' active','');}
+  bs[n].className+=' active';
+  window.scrollTo(0,0);
+}
+function showTab(p,t){
+  var ts=document.querySelectorAll('#p'+p+' .tab-content');
+  for(var i=0;i<ts.length;i++){ts[i].className=ts[i].className.replace(' active','');}
+  document.getElementById('p'+p+'-t'+t).className+=' active';
+  var bs=document.querySelectorAll('#p'+p+' .tab-btn');
+  for(var i=0;i<bs.length;i++){bs[i].className=bs[i].className.replace(' active','');}
+  document.getElementById('p'+p+'-tb'+t).className+=' active';
+}
+function check(qId,btn,isCorrect,exp){
+  var opts=btn.parentNode.getElementsByClassName('q-opt');
+  for(var i=0;i<opts.length;i++){opts[i].className='q-opt';}
+  var fb=document.getElementById('fb-'+qId);
+  if(isCorrect){
+    btn.className='q-opt correct';
+    fb.className='q-fb show right';
+    fb.innerHTML='\u2713 \uc815\ub2f5\uc785\ub2c8\ub2e4. '+exp;
+  }else{
+    btn.className='q-opt wrong';
+    fb.className='q-fb show wr';
+    fb.innerHTML='\u2717 \uc624\ub2f5\uc785\ub2c8\ub2e4. '+exp;
+  }
+}
+function resetQuiz(qId){
+  var q=document.getElementById(qId);
+  var opts=q.getElementsByClassName('q-opt');
+  for(var i=0;i<opts.length;i++){opts[i].className='q-opt';}
+  var fb=document.getElementById('fb-'+qId);
+  fb.className='q-fb';fb.innerHTML='';
+}
+function toggleAns(id){
+  var el=document.getElementById(id);
+  if(el.className.indexOf('show')>-1){el.className='model-ans';}
+  else{el.className='model-ans show';}
+}
+</script>
+
+<div class="passage active" id="p0">
+<div class="passage-header">
+<h2>13-G. The Early Grain Trade Firms</h2>
+<div class="subj">곡물 무역과 정보의 비대칭 활용</div>
+</div>
+<div class="tabs">
+<button class="tab-btn active" id="p0-tb0" onclick="showTab(0,0)">전문</button>
+<button class="tab-btn" id="p0-tb1" onclick="showTab(0,1)">문장분석</button>
+<button class="tab-btn" id="p0-tb2" onclick="showTab(0,2)">핵심단어·표현</button>
+<button class="tab-btn" id="p0-tb3" onclick="showTab(0,3)">전문해석</button>
+<button class="tab-btn" id="p0-tb4" onclick="showTab(0,4)">주제·요지</button>
+<button class="tab-btn" id="p0-tb5" onclick="showTab(0,5)">배경지식</button>
+<button class="tab-btn" id="p0-tb6" onclick="showTab(0,6)">변형문제</button>
+</div>
+
+<div class="tab-content active" id="p0-t0">
+<h3>전문 (Original Text)</h3>
+<div class="full-passage-box">
+The early grain trade firms were active in both surplus-producing and food deficit regions, and these firms made it their business to know the state of supply and demand in both. Because this information was the key to their profitability, these firms worked in relative secrecy, frequently built on family ties, trust, and loyalty. In addition, these firms were able to benefit from the rise of commodity exchanges and commodities futures markets that emerged in the mid-1800s. Agricultural markets are naturally unstable, due to changes in harvest size that result from variable weather patterns and other factors. Locking-in prices by buying and selling grain for future delivery helped these firms to minimize such risks. It made sense for the grain trading companies to manage their risks within a single firm that was operating in more than one country, rather than operating as independent national companies trading with each other. Their access to information in multiple markets enabled them to easily cover the risks associated with agricultural commodity trade.
+</div>
+</div>
+
+<div class="tab-content" id="p0-t1">
+<h3>문장분석 (Sentence Analysis)</h3>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">①</span>The early grain trade firms were active in both surplus-producing and food deficit regions, and these firms made it their business to know the state of supply and demand in both.</div>
+<div class="sent-slash">The early grain trade firms / were active / in both surplus-producing and food deficit regions, / and these firms made it their business / to know the state of supply and demand in both.</div>
+<div class="sent-ko">초기 곡물 무역 회사들은 / 활동했다 / 잉여 생산 지역과 식량 부족 지역 모두에서, / 그리고 이 회사들은 자신들의 일로 삼았다 / 두 지역 모두의 수요와 공급 상태를 아는 것을.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">make it + 명사 + to부정사 (가목적어 it)</span> ▶ <span class="gex">made it their business to know …</span> ★ <span class="gpoint">진목적어 to부정사를 뒤로 보낸 형태</span></div>
+<div class="gram-item">◆ <span class="gtitle">both A and B 병렬</span> ▶ <span class="gex">both surplus-producing and food deficit regions</span> ★ <span class="gpoint">A와 B는 동일 품사·구조</span></div>
+<div class="gram-item">◆ <span class="gtitle">분사형 형용사 (현재분사·과거분사)</span> ▶ <span class="gex">surplus-producing / food deficit</span> ★ <span class="gpoint">능동·진행 의미는 -ing, 결과 상태는 -ed</span></div>
+</div>
+</div>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">②</span>Because this information was the key to their profitability, these firms worked in relative secrecy, frequently built on family ties, trust, and loyalty.</div>
+<div class="sent-slash">Because this information was the key to their profitability, / these firms worked in relative secrecy, / frequently built on family ties, trust, and loyalty.</div>
+<div class="sent-ko">이 정보가 그들의 수익성의 열쇠였기 때문에, / 이 회사들은 비교적 비밀스럽게 운영되었고, / 흔히 가족 유대, 신뢰, 그리고 충성심에 기반을 두고 있었다.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">이유의 부사절 because</span> ▶ <span class="gex">Because this information was the key …</span> ★ <span class="gpoint">because + S + V (because of + 명사와 구별)</span></div>
+<div class="gram-item">◆ <span class="gtitle">분사구문 (수동, being 생략)</span> ▶ <span class="gex">(being) frequently built on family ties …</span> ★ <span class="gpoint">동시상황·부연설명 / 의미상 주어는 these firms</span></div>
+<div class="gram-item">◆ <span class="gtitle">A, B, and C 3요소 병렬</span> ▶ <span class="gex">family ties, trust, and loyalty</span> ★ <span class="gpoint">동일 품사 명사 나열, 마지막 항목 앞 and</span></div>
+</div>
+</div>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">③</span>In addition, these firms were able to benefit from the rise of commodity exchanges and commodities futures markets that emerged in the mid-1800s.</div>
+<div class="sent-slash">In addition, / these firms were able to benefit from / the rise of commodity exchanges and commodities futures markets / that emerged in the mid-1800s.</div>
+<div class="sent-ko">게다가, / 이 회사들은 이득을 볼 수 있었다 / 상품 거래소와 상품 선물 시장의 등장으로부터 / 1800년대 중반에 등장한.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">관계대명사 that (주격)</span> ▶ <span class="gex">markets that emerged in the mid-1800s</span> ★ <span class="gpoint">선행사 markets 수식, that 뒤 동사 일치</span></div>
+<div class="gram-item">◆ <span class="gtitle">be able to + 동사원형 (= can)</span> ▶ <span class="gex">were able to benefit from …</span> ★ <span class="gpoint">시제·태에 따라 형태 변화 가능</span></div>
+<div class="gram-item">◆ <span class="gtitle">연결 부사 In addition</span> ▶ <span class="gex">In addition, these firms …</span> ★ <span class="gpoint">첨가의 의미, 콤마와 함께 문두 사용</span></div>
+</div>
+</div>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">④</span>Agricultural markets are naturally unstable, due to changes in harvest size that result from variable weather patterns and other factors.</div>
+<div class="sent-slash">Agricultural markets are naturally unstable, / due to changes in harvest size / that result from variable weather patterns and other factors.</div>
+<div class="sent-ko">농산물 시장은 본질적으로 불안정하다, / 수확량의 변화 때문에 / 변덕스러운 날씨 패턴과 다른 요인들에서 비롯되는.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">due to + 명사 (이유 전치사구)</span> ▶ <span class="gex">due to changes in harvest size</span> ★ <span class="gpoint">because of와 유사 / because와 혼동 주의</span></div>
+<div class="gram-item">◆ <span class="gtitle">관계대명사 that (주격)</span> ▶ <span class="gex">changes … that result from …</span> ★ <span class="gpoint">선행사 changes 수식 / 동사 result 복수 일치</span></div>
+<div class="gram-item">◆ <span class="gtitle">result from (~에서 비롯되다)</span> ▶ <span class="gex">result from variable weather patterns</span> ★ <span class="gpoint">result in (~을 초래하다)과 구별</span></div>
+</div>
+</div>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">⑤</span>Locking-in prices by buying and selling grain for future delivery helped these firms to minimize such risks.</div>
+<div class="sent-slash">Locking-in prices / by buying and selling grain for future delivery / helped these firms / to minimize such risks.</div>
+<div class="sent-ko">가격을 고정시키는 것은 / 미래 인도를 위해 곡물을 사고 파는 것에 의해 / 이 회사들이 ~할 수 있도록 도왔다 / 그러한 위험을 최소화하도록.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">동명사 주어 (단수 취급)</span> ▶ <span class="gex">Locking-in prices … helped …</span> ★ <span class="gpoint">동명사구 주어는 항상 단수 동사로 받음</span></div>
+<div class="gram-item">◆ <span class="gtitle">help + O + (to) 동사원형</span> ▶ <span class="gex">helped these firms to minimize …</span> ★ <span class="gpoint">to 생략 가능 / 어법 출제 빈출</span></div>
+<div class="gram-item">◆ <span class="gtitle">by + 동명사 (수단·방법)</span> ▶ <span class="gex">by buying and selling grain</span> ★ <span class="gpoint">전치사 by 뒤에는 반드시 동명사</span></div>
+</div>
+</div>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">⑥</span>It made sense for the grain trading companies to manage their risks within a single firm that was operating in more than one country, rather than operating as independent national companies trading with each other.</div>
+<div class="sent-slash">It made sense / for the grain trading companies / to manage their risks / within a single firm / that was operating in more than one country, / rather than operating / as independent national companies / trading with each other.</div>
+<div class="sent-ko">합리적이었다 / 곡물 무역 회사들이 / 자신들의 위험을 관리하는 것이 / 단일 회사 내에서 / 둘 이상의 나라에서 운영되는, / ~보다 / 운영하는 것 / 독립적인 국가별 회사로 / 서로 거래하는.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">가주어 It ~ 진주어 to부정사</span> ▶ <span class="gex">It made sense … to manage …</span> ★ <span class="gpoint">to부정사의 의미상 주어는 for + 명사</span></div>
+<div class="gram-item">◆ <span class="gtitle">to부정사 의미상 주어</span> ▶ <span class="gex">for the grain trading companies to manage</span> ★ <span class="gpoint">'for + 목적격' 형태로 to부정사 앞에 위치</span></div>
+<div class="gram-item">◆ <span class="gtitle">rather than + 동명사 (대조 비교)</span> ▶ <span class="gex">rather than operating as …</span> ★ <span class="gpoint">앞 to manage와 형태 비교 (병렬 출제 빈출)</span></div>
+<div class="gram-item">◆ <span class="gtitle">현재분사 후치 수식</span> ▶ <span class="gex">companies trading with each other</span> ★ <span class="gpoint">앞 명사 companies를 능동 의미로 수식</span></div>
+</div>
+</div>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">⑦</span>Their access to information in multiple markets enabled them to easily cover the risks associated with agricultural commodity trade.</div>
+<div class="sent-slash">Their access to information / in multiple markets / enabled them / to easily cover the risks / associated with agricultural commodity trade.</div>
+<div class="sent-ko">그들의 정보 접근은 / 여러 시장에서의 / 그들이 ~할 수 있게 해주었다 / 위험을 쉽게 감당할 수 있도록 / 농산물 상품 무역과 관련된.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">enable + O + to부정사</span> ▶ <span class="gex">enabled them to easily cover …</span> ★ <span class="gpoint">5형식 동사 / 목적격보어로 to부정사</span></div>
+<div class="gram-item">◆ <span class="gtitle">과거분사 후치 수식 (수동)</span> ▶ <span class="gex">risks associated with …</span> ★ <span class="gpoint">관계대명사 + be동사 생략 형태 (which are)</span></div>
+<div class="gram-item">◆ <span class="gtitle">분리부정사 (split infinitive)</span> ▶ <span class="gex">to easily cover</span> ★ <span class="gpoint">to와 동사원형 사이에 부사 삽입 형태</span></div>
+</div>
+</div>
+
+</div>
+
+<div class="tab-content" id="p0-t2">
+<h3>핵심단어 및 표현</h3>
+<div class="vocab-list">
+<div class="vocab-item"><span class="vocab-en">surplus-producing</span><span class="vocab-pos">adj.</span><span class="vocab-ko">잉여(여분)를 생산하는</span><div class="vocab-deriv">surplus (n.) 잉여, 흑자 / surplus value 잉여 가치</div></div>
+<div class="vocab-item"><span class="vocab-en">deficit</span><span class="vocab-pos">n.</span><span class="vocab-ko">부족, 결손, 적자</span><div class="vocab-deriv">deficient (adj.) 부족한 / deficiency (n.) 결핍</div></div>
+<div class="vocab-item"><span class="vocab-en">supply and demand</span><span class="vocab-pos">phr.</span><span class="vocab-ko">수요와 공급</span><div class="vocab-deriv">supply (n./v.) 공급(하다) / demand (n./v.) 수요, 요구(하다)</div></div>
+<div class="vocab-item"><span class="vocab-en">profitability</span><span class="vocab-pos">n.</span><span class="vocab-ko">수익성</span><div class="vocab-deriv">profit (n.) 이익 / profitable (adj.) 수익성 있는</div></div>
+<div class="vocab-item"><span class="vocab-en">secrecy</span><span class="vocab-pos">n.</span><span class="vocab-ko">비밀, 비밀 유지</span><div class="vocab-deriv">secret (n./adj.) 비밀(의) / secretive (adj.) 비밀스러운</div></div>
+<div class="vocab-item"><span class="vocab-en">family ties</span><span class="vocab-pos">phr.</span><span class="vocab-ko">가족 유대(관계)</span><div class="vocab-deriv">tie (n.) 유대, 연결 / tied (adj.) 묶인</div></div>
+<div class="vocab-item"><span class="vocab-en">loyalty</span><span class="vocab-pos">n.</span><span class="vocab-ko">충성(심)</span><div class="vocab-deriv">loyal (adj.) 충성스러운 / loyalist (n.) 충성파</div></div>
+<div class="vocab-item"><span class="vocab-en">commodity exchange</span><span class="vocab-pos">phr.</span><span class="vocab-ko">상품 거래소</span><div class="vocab-deriv">commodity (n.) 상품, 원자재 / exchange (n.) 거래소</div></div>
+<div class="vocab-item"><span class="vocab-en">futures market</span><span class="vocab-pos">phr.</span><span class="vocab-ko">선물 시장</span><div class="vocab-deriv">future delivery (미래 인도) / futures contract (선물 계약)</div></div>
+<div class="vocab-item"><span class="vocab-en">unstable</span><span class="vocab-pos">adj.</span><span class="vocab-ko">불안정한</span><div class="vocab-deriv">stable (adj.) 안정된 / stability (n.) 안정성 / instability (n.) 불안정</div></div>
+<div class="vocab-item"><span class="vocab-en">harvest</span><span class="vocab-pos">n./v.</span><span class="vocab-ko">수확(하다), 수확량</span><div class="vocab-deriv">harvester (n.) 수확하는 사람·기계</div></div>
+<div class="vocab-item"><span class="vocab-en">variable</span><span class="vocab-pos">adj.</span><span class="vocab-ko">변하기 쉬운, 변덕스러운</span><div class="vocab-deriv">vary (v.) 다양하다 / variation (n.) 변동 / variability (n.) 가변성</div></div>
+<div class="vocab-item"><span class="vocab-en">lock in</span><span class="vocab-pos">v.</span><span class="vocab-ko">(가격 등을) 고정시키다</span><div class="vocab-deriv">lock-in (n.) 고정, 잠금 / locked-in (adj.) 고정된</div></div>
+<div class="vocab-item"><span class="vocab-en">minimize</span><span class="vocab-pos">v.</span><span class="vocab-ko">최소화하다</span><div class="vocab-deriv">minimum (n.) 최소 / minimal (adj.) 최소의 / maximize (반의어)</div></div>
+<div class="vocab-item"><span class="vocab-en">be associated with</span><span class="vocab-pos">phr.</span><span class="vocab-ko">~와 관련되다</span><div class="vocab-deriv">association (n.) 협회, 연관 / associate (v.) 연관시키다</div></div>
+</div>
+</div>
+
+<div class="tab-content" id="p0-t3">
+<h3>전문해석</h3>
+<div class="translation">
+초기의 곡물 무역 회사들은 잉여 생산 지역과 식량 부족 지역 모두에서 활동했으며, 이 회사들은 양쪽 지역의 수요와 공급 상태를 파악하는 것을 자신들의 주요 업무로 삼았다. 이러한 정보가 그들의 수익성을 좌우하는 핵심이었기 때문에, 이 회사들은 비교적 비밀스럽게 운영되었으며, 흔히 가족 간의 유대와 신뢰, 그리고 충성심을 바탕으로 구축되었다. 게다가, 이 회사들은 1800년대 중반에 등장한 상품 거래소와 상품 선물 시장의 부상으로부터 이익을 얻을 수 있었다. 농산물 시장은 변덕스러운 날씨 패턴과 다른 요인들에서 비롯되는 수확량의 변화 때문에 본질적으로 불안정하다. 미래 인도를 조건으로 곡물을 사고팔아 가격을 고정시키는 것은 이 회사들이 그러한 위험을 최소화하는 데 도움이 되었다. 곡물 무역 회사들에게는 서로 거래하는 독립적인 국가별 회사로 운영되기보다는, 둘 이상의 나라에서 활동하는 단일 회사 내에서 위험을 관리하는 것이 합리적이었다. 여러 시장의 정보에 접근할 수 있다는 점은 그들이 농산물 상품 무역과 관련된 위험을 쉽게 감당할 수 있게 해주었다.
+</div>
+</div>
+
+<div class="tab-content" id="p0-t4">
+<h3>주제 · 요지 · 구조</h3>
+<div class="theme-block"><h4>Topic · 주제</h4><div class="content">초기 곡물 무역 회사들이 정보 우위와 다국적 운영을 통해 농산물 시장의 위험을 관리한 방식</div></div>
+<div class="theme-block"><h4>Main Idea · 요지</h4><div class="content">초기 곡물 무역 회사들은 잉여 지역과 부족 지역 모두에서 정보를 장악하고 비밀스러운 가족 기반 운영과 선물 시장 활용을 통해 수익을 창출했으며, 여러 나라에 걸친 단일 기업 구조로 농산물 시장의 본질적 불안정성에서 오는 위험을 효과적으로 분산·관리했다.</div></div>
+<div class="theme-block"><h4>Structure · 구조 흐름</h4>
+<div class="struct-flow">
+<div class="struct-step"><b>도입 (①)</b> — 초기 곡물 무역 회사들의 활동 영역과 정보 장악 전략 소개</div>
+<div class="struct-step"><b>전개 1 (②③)</b> — 비밀 유지·가족 기반 운영, 선물 시장 등장으로 인한 이점 제시</div>
+<div class="struct-step"><b>전개 2 (④⑤)</b> — 농산물 시장의 본질적 불안정성과 가격 고정을 통한 위험 최소화 방법</div>
+<div class="struct-step"><b>결론 (⑥⑦)</b> — 다국적 단일 기업 구조의 합리성과 정보 접근성을 통한 위험 관리 효과</div>
+</div></div>
+</div>
+
+<div class="tab-content" id="p0-t5">
+<h3>지문의 배경지식</h3>
+<div class="bg-block">
+<h4>● 19세기 곡물 무역과 ABCD 기업</h4>
+오늘날 세계 곡물 무역의 약 70~90%를 장악하고 있는 ABCD라 불리는 4대 곡물 메이저(ADM, Bunge, Cargill, Louis Dreyfus)는 모두 19세기 중반(1818~1851)에 설립되었다. 이 회사들은 본 지문에서 설명하는 것처럼 가족 기반의 비밀스러운 운영, 다국적 정보망, 그리고 선물 시장 활용이라는 세 축을 통해 200년 가까이 시장을 지배해왔다.
+
+<h4>● 상품 선물 시장(Commodities Futures Market)의 탄생</h4>
+1848년 시카고 상품거래소(CBOT)가 설립되면서 본격적인 선물 거래가 시작되었다. 농민과 무역업자가 미래의 일정 시점에 정해진 가격으로 곡물을 사고팔기로 미리 계약함으로써, 수확 시점의 가격 변동 위험(price risk)을 회피(hedge)할 수 있게 되었다. 이는 곡물 무역의 안정성을 비약적으로 높였다.
+
+<h4>● 정보 비대칭(Information Asymmetry)과 시장 지배력</h4>
+경제학에서 정보 비대칭은 거래 당사자 중 한쪽이 더 많은 정보를 가질 때 발생하는 시장 왜곡 현상을 말한다. 초기 곡물 무역 회사들은 전 세계에 깔린 자체 정보망을 통해 수확량, 기상, 운송 상황을 누구보다 먼저 파악함으로써 압도적인 경쟁 우위를 확보했다.
+
+<h4>● 다국적 단일 기업(Single Multinational Firm) 구조의 우월성</h4>
+서로 다른 국가의 독립 회사들이 거래하는 방식보다, 한 회사가 여러 나라에 자회사를 두고 내부 거래로 위험을 분산하는 방식이 거래 비용(transaction cost)을 줄이고 정보 통합을 가능하게 한다는 것은 R. Coase의 거래비용 이론과 연결되는 핵심 개념이다.
+</div>
+</div>
+
+<div class="tab-content" id="p0-t6">
+<h3>변형문제 (Interactive Quiz)</h3>
+
+<div class="quiz-q" id="q0-1">
+<div class="q-title">1. 윗글의 주제로 가장 적절한 것은?</div>
+<div class="q-options">
+<button class="q-opt" onclick="check('q0-1',this,false,'농민의 자율성보다는 무역 회사 측면의 전략이 핵심이다.')"><span class="onum">①</span>농민들이 곡물 무역 회사에 대항하기 위한 자구책</button>
+<button class="q-opt" onclick="check('q0-1',this,false,'기술 발전이 아니라 정보 통제가 본문의 핵심이다.')"><span class="onum">②</span>19세기 농업 기술 발전이 곡물 생산성에 미친 영향</button>
+<button class="q-opt" onclick="check('q0-1',this,true,'정보 우위, 비밀스러운 가족 기반 운영, 선물 시장과 다국적 구조를 통한 위험 관리가 핵심이다.')"><span class="onum">③</span>초기 곡물 무역 회사들의 정보 우위와 위험 관리 전략</button>
+<button class="q-opt" onclick="check('q0-1',this,false,'정부 정책의 영향은 본문에 언급되지 않는다.')"><span class="onum">④</span>곡물 무역에 대한 정부 규제의 변화 과정</button>
+<button class="q-opt" onclick="check('q0-1',this,false,'환경적 요인은 시장 불안정의 원인 중 하나로만 언급된다.')"><span class="onum">⑤</span>기후 변화가 세계 식량 안보에 미치는 환경적 영향</button>
+</div>
+<div class="q-fb" id="fb-q0-1"></div>
+<button class="q-reset" onclick="resetQuiz('q0-1')">↺ 다시 풀기</button>
+</div>
+
+<div class="quiz-q" id="q0-2">
+<div class="q-title">2. 다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+<div class="q-stem en">It made sense for the grain trading companies to manage their risks within a single firm operating in more than one country, rather than operating as independent national companies trading with each other. Their _______________ in multiple markets enabled them to easily cover the risks associated with agricultural commodity trade.</div>
+<div class="q-options">
+<button class="q-opt" onclick="check('q0-2',this,false,'단순히 자본의 양이 아니라 정보 접근성이 핵심이다.')"><span class="onum">①</span>amount of capital invested</button>
+<button class="q-opt" onclick="check('q0-2',this,true,'본문에서 \‘access to information in multiple markets\’가 핵심 표현이다.')"><span class="onum">②</span>access to information</button>
+<button class="q-opt" onclick="check('q0-2',this,false,'기술적 우월성은 본문의 초점이 아니다.')"><span class="onum">③</span>superiority in technology</button>
+<button class="q-opt" onclick="check('q0-2',this,false,'정부 보조금에 대한 언급은 없다.')"><span class="onum">④</span>support from governments</button>
+<button class="q-opt" onclick="check('q0-2',this,false,'농민과의 직접 계약이 아니라 다국적 정보망이 핵심이다.')"><span class="onum">⑤</span>direct contracts with farmers</button>
+</div>
+<div class="q-fb" id="fb-q0-2"></div>
+<button class="q-reset" onclick="resetQuiz('q0-2')">↺ 다시 풀기</button>
+</div>
+
+<div class="quiz-q" id="q0-3">
+<div class="q-title">3. 다음 밑줄 친 부분 중 어법상 어색한 것은?</div>
+<div class="q-stem en">Agricultural markets are naturally unstable, due to changes in harvest size that <u>①result</u> from variable weather patterns and other factors. Locking-in prices by buying and selling grain for future delivery <u>②helped</u> these firms to minimize such risks. It made sense for the grain trading companies to manage their risks within a single firm that <u>③was operating</u> in more than one country, rather than <u>④operate</u> as independent national companies <u>⑤trading</u> with each other.</div>
+<div class="q-options">
+<button class="q-opt" onclick="check('q0-3',this,false,'changes 복수 선행사와 일치하므로 result는 정상이다.')"><span class="onum">①</span>result</button>
+<button class="q-opt" onclick="check('q0-3',this,false,'동명사 주어 Locking-in이 단수 취급되므로 helped는 적절하다.')"><span class="onum">②</span>helped</button>
+<button class="q-opt" onclick="check('q0-3',this,false,'관계대명사 that의 동사로 단수 firm과 일치하므로 적절하다.')"><span class="onum">③</span>was operating</button>
+<button class="q-opt" onclick="check('q0-3',this,true,'rather than 앞의 to manage와 병렬을 이루어야 하므로 operate(원형) → operating(동명사)이 되어야 한다. (또는 to operate)')"><span class="onum">④</span>operate</button>
+<button class="q-opt" onclick="check('q0-3',this,false,'companies를 능동으로 수식하는 현재분사로 적절하다.')"><span class="onum">⑤</span>trading</button>
+</div>
+<div class="q-fb" id="fb-q0-3"></div>
+<button class="q-reset" onclick="resetQuiz('q0-3')">↺ 다시 풀기</button>
+</div>
+
+<div class="quiz-q" id="q0-4">
+<div class="q-title">4. 윗글의 내용과 일치하지 <u>않는</u> 것은?</div>
+<div class="q-options">
+<button class="q-opt" onclick="check('q0-4',this,false,'잉여 생산 지역과 식량 부족 지역 모두에서 활동했다고 본문 첫 문장에 명시되어 있다.')"><span class="onum">①</span>초기 곡물 무역 회사들은 잉여 지역과 부족 지역 모두에서 활동했다.</button>
+<button class="q-opt" onclick="check('q0-4',this,false,'정보가 수익성의 열쇠이므로 비교적 비밀스럽게 운영되었다고 했다.')"><span class="onum">②</span>그들은 정보가 수익성의 핵심이었기에 비밀스럽게 운영되었다.</button>
+<button class="q-opt" onclick="check('q0-4',this,true,'본문은 1800년대 중반(mid-1800s)에 등장했다고 명시했지, 18세기 초반이 아니다.')"><span class="onum">③</span>상품 선물 시장은 18세기 초반에 등장하여 곡물 무역에 도움을 주었다.</button>
+<button class="q-opt" onclick="check('q0-4',this,false,'농산물 시장은 본질적으로 불안정하다고 명시되어 있다.')"><span class="onum">④</span>농산물 시장은 본질적으로 불안정한 특성을 지닌다.</button>
+<button class="q-opt" onclick="check('q0-4',this,false,'다국적 단일 기업 구조가 합리적이라고 본문에 직접 언급된다.')"><span class="onum">⑤</span>여러 나라에서 운영되는 단일 회사로 위험을 관리하는 것이 합리적이었다.</button>
+</div>
+<div class="q-fb" id="fb-q0-4"></div>
+<button class="q-reset" onclick="resetQuiz('q0-4')">↺ 다시 풀기</button>
+</div>
+
+<div class="quiz-q" id="q0-5">
+<div class="q-title">5. 다음 글 다음에 이어질 글의 순서로 가장 적절한 것은?</div>
+<div class="q-stem">The early grain trade firms were active in both surplus-producing and food deficit regions, and these firms made it their business to know the state of supply and demand in both.<br><br>(A) Agricultural markets are naturally unstable, due to changes in harvest size that result from variable weather patterns and other factors. Locking-in prices by buying and selling grain for future delivery helped these firms to minimize such risks.<br><br>(B) Because this information was the key to their profitability, these firms worked in relative secrecy, frequently built on family ties, trust, and loyalty. In addition, these firms were able to benefit from the rise of commodity exchanges and commodities futures markets that emerged in the mid-1800s.<br><br>(C) It made sense for the grain trading companies to manage their risks within a single firm that was operating in more than one country, rather than operating as independent national companies trading with each other.</div>
+<div class="q-options">
+<button class="q-opt" onclick="check('q0-5',this,false,'(A)의 농산물 시장 위험은 (B)의 선물 시장 등장 다음에 와야 자연스럽다.')"><span class="onum">①</span>(A) - (B) - (C)</button>
+<button class="q-opt" onclick="check('q0-5',this,false,'(C)의 결론은 위험 관리 설명 이후에 와야 한다.')"><span class="onum">②</span>(A) - (C) - (B)</button>
+<button class="q-opt" onclick="check('q0-5',this,true,'(B) 비밀 운영·선물 시장 등장 → (A) 시장 불안정성과 가격 고정으로 위험 최소화 → (C) 다국적 단일 기업 구조라는 결론 흐름이 가장 자연스럽다.')"><span class="onum">③</span>(B) - (A) - (C)</button>
+<button class="q-opt" onclick="check('q0-5',this,false,'(C)의 결론은 마지막에 위치해야 한다.')"><span class="onum">④</span>(B) - (C) - (A)</button>
+<button class="q-opt" onclick="check('q0-5',this,false,'(C)의 결론적 진술은 도입 직후에 오기 어렵다.')"><span class="onum">⑤</span>(C) - (A) - (B)</button>
+</div>
+<div class="q-fb" id="fb-q0-5"></div>
+<button class="q-reset" onclick="resetQuiz('q0-5')">↺ 다시 풀기</button>
+</div>
+
+<div class="essay-q">
+<div class="et">[서술형 1] 빈칸 요약</div>
+<div class="es">다음은 윗글의 요지를 한 문장으로 요약한 것이다. 빈칸 (A), (B)에 들어갈 말을 본문에서 찾아 쓰시오.</div>
+<div class="ec">조건: 본문에 등장한 단어를 그대로 활용할 것</div>
+<div class="es"><i>The early grain trade firms gained a competitive edge by maintaining (A) ___________ in multiple markets and managing risks through a single (B) ___________ firm operating across countries.</i></div>
+<textarea placeholder="(A): &#10;(B): "></textarea>
+<button class="ans-toggle" onclick="toggleAns('ans0-1')">▼ 모범답안 보기</button>
+<div class="model-ans" id="ans0-1">
+<b>(A)</b> access to information &nbsp;|&nbsp; <b>(B)</b> multinational (또는 single)<br>
+<b>해설:</b> 본문 마지막 문장 "Their access to information in multiple markets enabled them to easily cover the risks"와 "manage their risks within a single firm that was operating in more than one country"에서 도출된다.
+</div>
+</div>
+
+<div class="essay-q">
+<div class="et">[서술형 2] 영작 서술형</div>
+<div class="es">초기 곡물 무역 회사들이 위험을 최소화하기 위해 사용한 두 가지 핵심 전략을 본문에 근거하여 영어로 서술하시오.</div>
+<div class="ec">조건: 완전한 영어 문장 2개로 작성, 각 문장 25단어 내외, 본문 표현 활용 가능</div>
+<textarea placeholder="① &#10;② "></textarea>
+<button class="ans-toggle" onclick="toggleAns('ans0-2')">▼ 모범답안 보기</button>
+<div class="model-ans" id="ans0-2">
+<b>모범답안 예시:</b><br>
+① They locked in prices by buying and selling grain for future delivery through commodity exchanges and futures markets, which minimized the risks caused by unstable agricultural markets.<br>
+② They managed their risks within a single multinational firm operating in more than one country, using their access to information in multiple markets to cover trade-related risks.<br><br>
+<b>핵심 키워드:</b> locking-in prices / futures markets / single multinational firm / access to information / multiple markets
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="passage" id="p1">
+<div class="passage-header">
+<h2>13-1. Aristotle on Nature's Purpose</h2>
+<div class="subj">아리스토텔레스의 목적론적 자연관</div>
+</div>
+<div class="tabs">
+<button class="tab-btn active" id="p1-tb0" onclick="showTab(1,0)">전문</button>
+<button class="tab-btn" id="p1-tb1" onclick="showTab(1,1)">문장분석</button>
+<button class="tab-btn" id="p1-tb2" onclick="showTab(1,2)">핵심단어·표현</button>
+<button class="tab-btn" id="p1-tb3" onclick="showTab(1,3)">전문해석</button>
+<button class="tab-btn" id="p1-tb4" onclick="showTab(1,4)">주제·요지</button>
+<button class="tab-btn" id="p1-tb5" onclick="showTab(1,5)">배경지식</button>
+<button class="tab-btn" id="p1-tb6" onclick="showTab(1,6)">변형문제</button>
+</div>
+
+<div class="tab-content active" id="p1-t0">
+<h3>전문 (Original Text)</h3>
+<div class="full-passage-box">
+In the Physics, Aristotle asks whether nature acts for the sake of something. He offers an account of rain as water that rises when heated by the Sun, then cools, condenses, and falls to Earth, but is not particularly concerned with explaining rain as such. Rather, he addresses a more general question: how to account for natural objects, events, and processes that appear with regularity. He queries whether the sharpness of front teeth and the bluntness of molars is coincidental and rejects that possibility, because this arrangement occurs with regularity and that regularity is linked to purposefulness. The sharpness of front teeth allows them to tear while the bluntness of those in the back enables them to crush food; both are useful for eating. In Aristotle&apos;s view, all natural things happen in a given way and occur for the sake of something; that is the final cause.
+</div>
+</div>
+
+<div class="tab-content" id="p1-t1">
+<h3>문장분석 (Sentence Analysis)</h3>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">①</span>In the Physics, Aristotle asks whether nature acts for the sake of something.</div>
+<div class="sent-slash">In the Physics, / Aristotle asks / whether nature acts / for the sake of something.</div>
+<div class="sent-ko">『물리학』에서 / 아리스토텔레스는 묻는다 / 자연이 ~을 위해 작용하는지를 / 무언가를 위해.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">간접의문문 whether절</span> ▶ <span class="gex">asks whether nature acts …</span> ★ <span class="gpoint">동사 ask의 목적어 / whether = if</span></div>
+<div class="gram-item">◆ <span class="gtitle">for the sake of + 명사 (~을 위해서)</span> ▶ <span class="gex">for the sake of something</span> ★ <span class="gpoint">목적·이유를 나타내는 관용 표현</span></div>
+<div class="gram-item">◆ <span class="gtitle">고유명사 작품명 The Physics</span> ▶ <span class="gex">In the Physics</span> ★ <span class="gpoint">책·작품명은 이탤릭/대문자 처리</span></div>
+</div>
+</div>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">②</span>He offers an account of rain as water that rises when heated by the Sun, then cools, condenses, and falls to Earth, but is not particularly concerned with explaining rain as such.</div>
+<div class="sent-slash">He offers an account of rain / as water / that rises / when heated by the Sun, / then cools, condenses, and falls to Earth, / but is not particularly concerned with / explaining rain as such.</div>
+<div class="sent-ko">그는 비에 대한 설명을 제공한다 / 물로서 / 상승하는 / 태양에 의해 가열될 때, / 그러고 나서 식고, 응결되며, 지구로 떨어지는, / 그러나 그는 특별히 관심을 두지 않는다 / 비 자체를 설명하는 것에는.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">관계대명사 that (주격, 4동사 병렬)</span> ▶ <span class="gex">water that rises … cools, condenses, and falls</span> ★ <span class="gpoint">선행사 water의 동사들이 모두 병렬</span></div>
+<div class="gram-item">◆ <span class="gtitle">분사구문 (시간) when heated</span> ▶ <span class="gex">when heated by the Sun</span> ★ <span class="gpoint">when (it is) heated에서 it is 생략 / 수동</span></div>
+<div class="gram-item">◆ <span class="gtitle">be concerned with + 동명사</span> ▶ <span class="gex">concerned with explaining rain</span> ★ <span class="gpoint">전치사 with 뒤에는 동명사 / '~에 관심을 두다'</span></div>
+<div class="gram-item">◆ <span class="gtitle">as such (그 자체로, 그러한 것으로)</span> ▶ <span class="gex">explaining rain as such</span> ★ <span class="gpoint">관용 표현 / 앞 명사를 강조</span></div>
+</div>
+</div>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">③</span>Rather, he addresses a more general question: how to account for natural objects, events, and processes that appear with regularity.</div>
+<div class="sent-slash">Rather, / he addresses a more general question: / how to account for / natural objects, events, and processes / that appear with regularity.</div>
+<div class="sent-ko">오히려, / 그는 더 일반적인 질문을 다룬다: / 어떻게 설명할 것인가 / 자연의 사물, 사건, 그리고 과정을 / 규칙성을 가지고 나타나는.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">의문사 + to부정사 (명사구)</span> ▶ <span class="gex">how to account for …</span> ★ <span class="gpoint">'어떻게 ~할지'의 의미 / 콜론 뒤 동격 명사구</span></div>
+<div class="gram-item">◆ <span class="gtitle">관계대명사 that (주격)</span> ▶ <span class="gex">objects, events, and processes that appear …</span> ★ <span class="gpoint">선행사 3요소 모두 수식 (복수 명사들)</span></div>
+<div class="gram-item">◆ <span class="gtitle">A, B, and C 3요소 병렬</span> ▶ <span class="gex">objects, events, and processes</span> ★ <span class="gpoint">동일 품사 명사 나열</span></div>
+</div>
+</div>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">④</span>He queries whether the sharpness of front teeth and the bluntness of molars is coincidental and rejects that possibility, because this arrangement occurs with regularity and that regularity is linked to purposefulness.</div>
+<div class="sent-slash">He queries / whether the sharpness of front teeth / and the bluntness of molars / is coincidental / and rejects that possibility, / because this arrangement occurs with regularity / and that regularity is linked to purposefulness.</div>
+<div class="sent-ko">그는 묻는다 / 앞니의 날카로움과 / 어금니의 무딤이 / 우연인지를 / 그리고 그 가능성을 거부한다, / 왜냐하면 이 배치는 규칙적으로 일어나고 / 그 규칙성은 목적성과 연결되어 있기 때문이다.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">간접의문문 whether절 (병렬 주어)</span> ▶ <span class="gex">whether the sharpness … and the bluntness … is coincidental</span> ★ <span class="gpoint">두 명사구가 하나의 의문 대상으로 묶여 단수 취급 (출제 빈출)</span></div>
+<div class="gram-item">◆ <span class="gtitle">동사 병렬 (queries … and rejects)</span> ▶ <span class="gex">He queries … and rejects …</span> ★ <span class="gpoint">주어 He에 두 동사가 병렬로 연결</span></div>
+<div class="gram-item">◆ <span class="gtitle">be linked to (~와 연결되다, 수동)</span> ▶ <span class="gex">that regularity is linked to purposefulness</span> ★ <span class="gpoint">be linked with도 가능 / 수동태 표현</span></div>
+<div class="gram-item">◆ <span class="gtitle">이유 부사절 because</span> ▶ <span class="gex">because this arrangement occurs … and that regularity is linked …</span> ★ <span class="gpoint">because 절 안에 두 절이 and로 병렬</span></div>
+</div>
+</div>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">⑤</span>The sharpness of front teeth allows them to tear while the bluntness of those in the back enables them to crush food; both are useful for eating.</div>
+<div class="sent-slash">The sharpness of front teeth / allows them / to tear / while the bluntness of those in the back / enables them / to crush food; / both are useful for eating.</div>
+<div class="sent-ko">앞니의 날카로움은 / 그것들이 ~할 수 있게 한다 / 찢도록 / 반면 뒤쪽 어금니의 무딤은 / 그것들이 ~할 수 있게 한다 / 음식을 으깨도록 / 둘 다 먹는 데 유용하다.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">allow / enable + O + to부정사 (5형식)</span> ▶ <span class="gex">allows them to tear / enables them to crush</span> ★ <span class="gpoint">목적격보어로 to부정사 / 어법 출제 빈출</span></div>
+<div class="gram-item">◆ <span class="gtitle">대조 부사절 while (반면에)</span> ▶ <span class="gex">while the bluntness …</span> ★ <span class="gpoint">시간(~하는 동안)이 아닌 대조 의미</span></div>
+<div class="gram-item">◆ <span class="gtitle">지시대명사 those (= teeth 대용)</span> ▶ <span class="gex">those in the back</span> ★ <span class="gpoint">앞에 나온 복수 명사를 받는 those</span></div>
+</div>
+</div>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">⑥</span>In Aristotle&apos;s view, all natural things happen in a given way and occur for the sake of something; that is the final cause.</div>
+<div class="sent-slash">In Aristotle&apos;s view, / all natural things / happen in a given way / and occur for the sake of something; / that is the final cause.</div>
+<div class="sent-ko">아리스토텔레스의 관점에서, / 모든 자연적인 것들은 / 정해진 방식으로 일어나고 / 무언가를 위해 발생한다; / 그것이 바로 목적인이다.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">전치사구 In one's view (~의 관점에서)</span> ▶ <span class="gex">In Aristotle&apos;s view</span> ★ <span class="gpoint">According to Aristotle와 유사 표현</span></div>
+<div class="gram-item">◆ <span class="gtitle">동사 병렬 (happen … and occur)</span> ▶ <span class="gex">happen … and occur for the sake of …</span> ★ <span class="gpoint">주어 all natural things에 두 자동사 병렬</span></div>
+<div class="gram-item">◆ <span class="gtitle">세미콜론(;) 사용</span> ▶ <span class="gex">… for the sake of something; that is …</span> ★ <span class="gpoint">독립절을 연결, 마침표보다 긴밀한 관계</span></div>
+</div>
+</div>
+
+</div>
+
+<div class="tab-content" id="p1-t2">
+<h3>핵심단어 및 표현</h3>
+<div class="vocab-list">
+<div class="vocab-item"><span class="vocab-en">for the sake of</span><span class="vocab-pos">phr.</span><span class="vocab-ko">~을 위해서, ~을 목적으로</span><div class="vocab-deriv">sake (n.) 목적, 이유 / for the sake of argument (논의를 위하여)</div></div>
+<div class="vocab-item"><span class="vocab-en">offer an account of</span><span class="vocab-pos">phr.</span><span class="vocab-ko">~에 대한 설명을 제공하다</span><div class="vocab-deriv">account (n.) 설명, 계좌 / accountable (adj.) 책임 있는</div></div>
+<div class="vocab-item"><span class="vocab-en">condense</span><span class="vocab-pos">v.</span><span class="vocab-ko">응결하다, 액화하다, 압축하다</span><div class="vocab-deriv">condensation (n.) 응결 / condensed (adj.) 응축된</div></div>
+<div class="vocab-item"><span class="vocab-en">be concerned with</span><span class="vocab-pos">phr.</span><span class="vocab-ko">~에 관심을 두다, ~과 관련되다</span><div class="vocab-deriv">concern (n./v.) 관심사, 우려 / concerning (prep.) ~에 관하여</div></div>
+<div class="vocab-item"><span class="vocab-en">as such</span><span class="vocab-pos">phr.</span><span class="vocab-ko">그 자체로(서), 그러한 것으로</span><div class="vocab-deriv">such (adj./pron.) 그러한 (것)</div></div>
+<div class="vocab-item"><span class="vocab-en">address</span><span class="vocab-pos">v.</span><span class="vocab-ko">(문제를) 다루다, 처리하다</span><div class="vocab-deriv">address (n.) 주소, 연설</div></div>
+<div class="vocab-item"><span class="vocab-en">account for</span><span class="vocab-pos">phr.</span><span class="vocab-ko">~을 설명하다, ~을 차지하다</span><div class="vocab-deriv">accountable (adj.) 설명할 수 있는, 책임지는</div></div>
+<div class="vocab-item"><span class="vocab-en">regularity</span><span class="vocab-pos">n.</span><span class="vocab-ko">규칙성, 균일성</span><div class="vocab-deriv">regular (adj.) 규칙적인 / regularly (adv.) 정기적으로</div></div>
+<div class="vocab-item"><span class="vocab-en">query</span><span class="vocab-pos">v./n.</span><span class="vocab-ko">묻다, 의문을 제기하다 / 질문</span><div class="vocab-deriv">questionable (adj.) 의심스러운</div></div>
+<div class="vocab-item"><span class="vocab-en">sharpness</span><span class="vocab-pos">n.</span><span class="vocab-ko">날카로움, 예리함</span><div class="vocab-deriv">sharp (adj.) 날카로운 / sharpen (v.) 날카롭게 하다</div></div>
+<div class="vocab-item"><span class="vocab-en">bluntness</span><span class="vocab-pos">n.</span><span class="vocab-ko">무딤, 뭉뚝함</span><div class="vocab-deriv">blunt (adj.) 무딘, 직설적인 / bluntly (adv.) 직설적으로</div></div>
+<div class="vocab-item"><span class="vocab-en">molar</span><span class="vocab-pos">n.</span><span class="vocab-ko">어금니</span><div class="vocab-deriv">incisor (앞니), canine (송곳니), molar (어금니)</div></div>
+<div class="vocab-item"><span class="vocab-en">coincidental</span><span class="vocab-pos">adj.</span><span class="vocab-ko">우연의, 우연히 일어난</span><div class="vocab-deriv">coincidence (n.) 우연 / coincide (v.) 일치하다</div></div>
+<div class="vocab-item"><span class="vocab-en">purposefulness</span><span class="vocab-pos">n.</span><span class="vocab-ko">목적성, 의도성</span><div class="vocab-deriv">purpose (n.) 목적 / purposeful (adj.) 목적이 있는</div></div>
+<div class="vocab-item"><span class="vocab-en">final cause</span><span class="vocab-pos">phr.</span><span class="vocab-ko">목적인(目的因) (아리스토텔레스의 4원인 중 하나)</span><div class="vocab-deriv">cause (n.) 원인 / four causes: material, formal, efficient, final</div></div>
+</div>
+</div>
+
+<div class="tab-content" id="p1-t3">
+<h3>전문해석</h3>
+<div class="translation">
+『물리학』에서 아리스토텔레스는 자연이 어떤 무엇을 위해 작용하는지에 관해 묻는다. 그는 비를 태양에 의해 가열될 때 상승하고, 그런 다음 차가워지고 응결되어 지구로 떨어지는 물로서 설명을 제시하지만, 비 그 자체를 설명하는 데에는 특별히 관심을 두지 않는다. 오히려 그는 더 일반적인 질문을 다룬다: 즉, 규칙적으로 나타나는 자연의 사물, 사건, 그리고 과정들을 어떻게 설명할 것인가 하는 문제이다. 그는 앞니의 날카로움과 어금니의 무딤이 우연인지를 묻고 그 가능성을 거부하는데, 이는 이러한 배치가 규칙적으로 일어나며 그러한 규칙성이 목적성과 연결되어 있기 때문이다. 앞니의 날카로움은 음식을 찢을 수 있게 해주는 반면, 뒤쪽 어금니의 무딤은 음식을 으깰 수 있게 해주며, 둘 다 먹는 데 유용하다. 아리스토텔레스의 관점에서, 모든 자연적인 것들은 정해진 방식으로 일어나며 무언가를 위해 발생한다; 그것이 바로 '목적인(final cause)'이다.
+</div>
+</div>
+
+<div class="tab-content" id="p1-t4">
+<h3>주제 · 요지 · 구조</h3>
+<div class="theme-block"><h4>Topic · 주제</h4><div class="content">규칙성과 목적성을 통해 자연을 설명하는 아리스토텔레스의 목적론적 자연관(목적인)</div></div>
+<div class="theme-block"><h4>Main Idea · 요지</h4><div class="content">아리스토텔레스는 자연 현상을 단순한 우연이 아니라 규칙적으로 일어나는 목적 있는 활동으로 보았으며, 이러한 자연의 합목적성을 '목적인(final cause)'이라는 개념으로 설명했다.</div></div>
+<div class="theme-block"><h4>Structure · 구조 흐름</h4>
+<div class="struct-flow">
+<div class="struct-step"><b>도입 (①)</b> — 자연이 무엇을 위해 작용하는가에 대한 아리스토텔레스의 핵심 질문 제시</div>
+<div class="struct-step"><b>전개 1 (②③)</b> — 비의 사례 → 단일 현상이 아니라 일반적·규칙적 자연 현상에 관심</div>
+<div class="struct-step"><b>전개 2 (④⑤)</b> — 앞니·어금니의 사례 → 우연 가설 거부, 규칙성과 목적성의 연결 입증</div>
+<div class="struct-step"><b>결론 (⑥)</b> — 모든 자연은 정해진 방식으로 무언가를 위해 일어남 = 목적인(final cause)</div>
+</div></div>
+</div>
+
+<div class="tab-content" id="p1-t5">
+<h3>지문의 배경지식</h3>
+<div class="bg-block">
+<h4>● 아리스토텔레스의 4원인설 (Four Causes)</h4>
+아리스토텔레스는 사물의 존재 이유를 설명하기 위해 네 가지 원인(aitia)을 제시했다.<br>
+① <b>질료인(material cause)</b>: 무엇으로 만들어졌는가 — 예: 책상의 나무<br>
+② <b>형상인(formal cause)</b>: 어떤 형태·구조인가 — 예: 책상의 모양·설계<br>
+③ <b>작용인(efficient cause)</b>: 무엇이 만들었는가 — 예: 목수<br>
+④ <b>목적인(final cause)</b>: 무엇을 위해 존재하는가 — 예: 글을 쓰기 위해<br>
+본문은 이 중 가장 중요한 '목적인'을 다루며, 자연이 우연이 아닌 합목적성(teleology)을 가진다는 주장을 전개한다.
+
+<h4>● 목적론(Teleology)</h4>
+'목적'을 뜻하는 그리스어 telos에서 유래한 개념으로, 모든 자연 현상은 어떤 목적이나 기능을 향해 나아간다는 사상이다. 아리스토텔레스의 목적론은 중세 스콜라 철학과 토마스 아퀴나스에게 큰 영향을 주었으며, 이후 근대 기계론적 과학(데카르트·갈릴레이)에 의해 비판받기 전까지 서양 자연관의 근간이었다.
+
+<h4>● 『자연학(Physics)』</h4>
+아리스토텔레스의 자연철학 저작으로, 자연(physis), 운동, 변화, 시간, 공간, 무한, 원인 등을 다룬다. 본문에서 언급된 '비의 순환'은 II권 8장에 나오는 유명한 사례이며, 자연이 단지 물질적 작용이 아니라 목적을 향해 작용하는지를 묻는 핵심 부분이다.
+
+<h4>● 우연(coincidence) vs 규칙성(regularity)</h4>
+아리스토텔레스의 논증 방식은 다음과 같다: 만약 어떤 일이 항상 또는 대체로 같은 방식으로 일어난다면(규칙성), 그것은 우연일 수 없으며, 따라서 어떤 목적을 가지고 일어난다고 추론할 수 있다. 앞니가 항상 날카롭고 어금니가 항상 무딘 것은 우연이 아니라 '먹기 위한' 목적성의 발현이라는 것이 그의 핵심 논리이다.
+</div>
+</div>
+
+<div class="tab-content" id="p1-t6">
+<h3>변형문제 (Interactive Quiz)</h3>
+
+<div class="quiz-q" id="q1-1">
+<div class="q-title">1. 윗글의 주제로 가장 적절한 것은?</div>
+<div class="q-options">
+<button class="q-opt" onclick="check('q1-1',this,false,'본문은 비의 메커니즘을 설명하는 것이 핵심이 아니라, 자연 일반의 목적성을 설명하는 사례로 비를 언급한다.')"><span class="onum">①</span>물의 순환 과정에 대한 과학적 설명</button>
+<button class="q-opt" onclick="check('q1-1',this,false,'치아의 진화는 본문에서 다루지 않는다.')"><span class="onum">②</span>인간 치아의 진화 과정과 기능적 분화</button>
+<button class="q-opt" onclick="check('q1-1',this,true,'본문은 규칙성에서 목적성을 도출하는 아리스토텔레스의 목적론적 자연관(final cause)을 설명한다.')"><span class="onum">③</span>규칙성과 목적성에 기반한 아리스토텔레스의 자연관</button>
+<button class="q-opt" onclick="check('q1-1',this,false,'우연에 의한 진화는 다윈의 입장에 가까우며, 본문은 오히려 그 가능성을 거부한다.')"><span class="onum">④</span>우연성에 의해 결정되는 자연의 다양한 모습</button>
+<button class="q-opt" onclick="check('q1-1',this,false,'근대 과학과의 비교는 본문에 없다.')"><span class="onum">⑤</span>고대 자연철학과 근대 자연과학의 차이점</button>
+</div>
+<div class="q-fb" id="fb-q1-1"></div>
+<button class="q-reset" onclick="resetQuiz('q1-1')">↺ 다시 풀기</button>
+</div>
+
+<div class="quiz-q" id="q1-2">
+<div class="q-title">2. 다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+<div class="q-stem en">In Aristotle&apos;s view, all natural things happen in a given way and occur _______________; that is the final cause.</div>
+<div class="q-options">
+<button class="q-opt" onclick="check('q1-2',this,false,'우연(by chance)은 아리스토텔레스가 거부한 입장이다.')"><span class="onum">①</span>by chance</button>
+<button class="q-opt" onclick="check('q1-2',this,false,'규칙성은 결과적 특징이지, 목적인의 본질을 가리키는 표현은 아니다.')"><span class="onum">②</span>with regularity</button>
+<button class="q-opt" onclick="check('q1-2',this,true,'본문 첫 문장과 마지막 문장 모두 \‘for the sake of something\’을 핵심 표현으로 사용한다.')"><span class="onum">③</span>for the sake of something</button>
+<button class="q-opt" onclick="check('q1-2',this,false,'자연 법칙(natural laws)은 본문 표현이 아니다.')"><span class="onum">④</span>according to natural laws</button>
+<button class="q-opt" onclick="check('q1-2',this,false,'우주 만물에 의해(by the universe)라는 표현은 본문에 없다.')"><span class="onum">⑤</span>by the universe</button>
+</div>
+<div class="q-fb" id="fb-q1-2"></div>
+<button class="q-reset" onclick="resetQuiz('q1-2')">↺ 다시 풀기</button>
+</div>
+
+<div class="quiz-q" id="q1-3">
+<div class="q-title">3. 다음 밑줄 친 부분 중 어법상 어색한 것은?</div>
+<div class="q-stem en">He offers an account of rain as water that <u>①rises</u> when <u>②heated</u> by the Sun, then cools, condenses, and falls to Earth, but is not particularly concerned with <u>③explaining</u> rain as such. He queries whether the sharpness of front teeth and the bluntness of molars <u>④are</u> coincidental and rejects that possibility, because this arrangement occurs with regularity and that regularity is <u>⑤linked</u> to purposefulness.</div>
+<div class="q-options">
+<button class="q-opt" onclick="check('q1-3',this,false,'관계대명사 that의 선행사 water가 단수이므로 rises는 적절하다.')"><span class="onum">①</span>rises</button>
+<button class="q-opt" onclick="check('q1-3',this,false,'when (it is) heated에서 it is가 생략된 형태로 정확하다.')"><span class="onum">②</span>heated</button>
+<button class="q-opt" onclick="check('q1-3',this,false,'전치사 with 뒤에는 동명사 explaining이 적절하다.')"><span class="onum">③</span>explaining</button>
+<button class="q-opt" onclick="check('q1-3',this,true,'whether 절에서 \‘A and B\’ 두 명사구가 하나의 의문 대상으로 묶여 단수 취급되므로 are → is가 되어야 한다.')"><span class="onum">④</span>are</button>
+<button class="q-opt" onclick="check('q1-3',this,false,'be linked to (~과 연결되다) 수동형으로 적절하다.')"><span class="onum">⑤</span>linked</button>
+</div>
+<div class="q-fb" id="fb-q1-3"></div>
+<button class="q-reset" onclick="resetQuiz('q1-3')">↺ 다시 풀기</button>
+</div>
+
+<div class="quiz-q" id="q1-4">
+<div class="q-title">4. 윗글의 내용과 일치하지 <u>않는</u> 것은?</div>
+<div class="q-options">
+<button class="q-opt" onclick="check('q1-4',this,false,'본문은 \‘In the Physics\’에서 시작하므로 일치한다.')"><span class="onum">①</span>아리스토텔레스는 『자연학(Physics)』에서 자연의 목적성에 대한 질문을 제기한다.</button>
+<button class="q-opt" onclick="check('q1-4',this,true,'본문은 비의 메커니즘 자체를 설명하는 것에는 \‘특별히 관심을 두지 않는다(is not particularly concerned)\’고 명시했다.')"><span class="onum">②</span>아리스토텔레스는 비 그 자체를 설명하는 것에 가장 큰 관심을 두었다.</button>
+<button class="q-opt" onclick="check('q1-4',this,false,'본문은 앞니와 어금니의 배치가 우연일 가능성을 거부한다고 명시했다.')"><span class="onum">③</span>그는 치아 배치가 우연일 가능성을 거부한다.</button>
+<button class="q-opt" onclick="check('q1-4',this,false,'규칙성과 목적성의 연결은 본문의 핵심 주장이다.')"><span class="onum">④</span>규칙적으로 나타나는 현상은 목적성과 연결되어 있다.</button>
+<button class="q-opt" onclick="check('q1-4',this,false,'마지막 문장에 final cause가 명시되어 있다.')"><span class="onum">⑤</span>모든 자연적인 것은 무언가를 위해 발생하며, 이를 목적인이라 부른다.</button>
+</div>
+<div class="q-fb" id="fb-q1-4"></div>
+<button class="q-reset" onclick="resetQuiz('q1-4')">↺ 다시 풀기</button>
+</div>
+
+<div class="quiz-q" id="q1-5">
+<div class="q-title">5. 다음 글 다음에 이어질 글의 순서로 가장 적절한 것은?</div>
+<div class="q-stem">In the Physics, Aristotle asks whether nature acts for the sake of something.<br><br>(A) He queries whether the sharpness of front teeth and the bluntness of molars is coincidental and rejects that possibility, because this arrangement occurs with regularity and that regularity is linked to purposefulness.<br><br>(B) He offers an account of rain as water that rises when heated by the Sun, then cools, condenses, and falls to Earth, but is not particularly concerned with explaining rain as such. Rather, he addresses a more general question: how to account for natural objects, events, and processes that appear with regularity.<br><br>(C) The sharpness of front teeth allows them to tear while the bluntness of those in the back enables them to crush food; both are useful for eating. In Aristotle&apos;s view, all natural things happen in a given way and occur for the sake of something; that is the final cause.</div>
+<div class="q-options">
+<button class="q-opt" onclick="check('q1-5',this,false,'(A) 치아 사례는 (B)의 일반화 이후에 와야 자연스럽다.')"><span class="onum">①</span>(A) - (B) - (C)</button>
+<button class="q-opt" onclick="check('q1-5',this,false,'(C)의 결론은 마지막에 와야 한다.')"><span class="onum">②</span>(A) - (C) - (B)</button>
+<button class="q-opt" onclick="check('q1-5',this,true,'(B) 비 사례 → 일반 질문 제기 → (A) 치아 사례로 우연 가설 거부 → (C) 사례 정리 후 final cause 결론. 이 흐름이 가장 자연스럽다.')"><span class="onum">③</span>(B) - (A) - (C)</button>
+<button class="q-opt" onclick="check('q1-5',this,false,'(C)의 결론을 (A)보다 먼저 두면 논리가 끊긴다.')"><span class="onum">④</span>(B) - (C) - (A)</button>
+<button class="q-opt" onclick="check('q1-5',this,false,'(C)의 결론적 진술이 도입 직후에 올 수는 없다.')"><span class="onum">⑤</span>(C) - (A) - (B)</button>
+</div>
+<div class="q-fb" id="fb-q1-5"></div>
+<button class="q-reset" onclick="resetQuiz('q1-5')">↺ 다시 풀기</button>
+</div>
+
+<div class="essay-q">
+<div class="et">[서술형 1] 빈칸 요약</div>
+<div class="es">다음은 윗글의 요지를 한 문장으로 요약한 것이다. 빈칸 (A), (B)에 들어갈 말을 본문에서 찾아 쓰시오.</div>
+<div class="ec">조건: 본문에 등장한 단어를 그대로 활용할 것</div>
+<div class="es"><i>Aristotle argues that natural phenomena which occur with (A) ___________ are not coincidental but happen for the sake of something, which he calls the (B) ___________ cause.</i></div>
+<textarea placeholder="(A): &#10;(B): "></textarea>
+<button class="ans-toggle" onclick="toggleAns('ans1-1')">▼ 모범답안 보기</button>
+<div class="model-ans" id="ans1-1">
+<b>(A)</b> regularity &nbsp;|&nbsp; <b>(B)</b> final<br>
+<b>해설:</b> 본문 ④에서 "this arrangement occurs with regularity and that regularity is linked to purposefulness"와 마지막 문장 "that is the final cause"에서 핵심 어구를 확인할 수 있다.
+</div>
+</div>
+
+<div class="essay-q">
+<div class="et">[서술형 2] 영작 서술형</div>
+<div class="es">아리스토텔레스가 앞니와 어금니의 사례를 통해 무엇을 보여주려 했는지 본문에 근거하여 영어로 서술하시오.</div>
+<div class="ec">조건: 완전한 영어 문장 1~2개, 30~40단어 내외, regularity와 purposefulness 두 단어를 반드시 포함</div>
+<textarea placeholder="답안을 작성하세요."></textarea>
+<button class="ans-toggle" onclick="toggleAns('ans1-2')">▼ 모범답안 보기</button>
+<div class="model-ans" id="ans1-2">
+<b>모범답안 예시:</b><br>
+Aristotle uses the example of sharp front teeth and blunt molars to show that this arrangement is not coincidental; because it occurs with regularity, it must be linked to purposefulness, demonstrating that nature acts for the sake of something useful, namely eating.<br><br>
+<b>핵심 키워드:</b> not coincidental / regularity / purposefulness / for the sake of / useful for eating
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="passage" id="p2">
+<div class="passage-header">
+<h2>13-2. AI as a Prolific Idea Generator</h2>
+<div class="subj">창의성과 아이디어의 양</div>
+</div>
+<div class="tabs">
+<button class="tab-btn active" id="p2-tb0" onclick="showTab(2,0)">전문</button>
+<button class="tab-btn" id="p2-tb1" onclick="showTab(2,1)">문장분석</button>
+<button class="tab-btn" id="p2-tb2" onclick="showTab(2,2)">핵심단어·표현</button>
+<button class="tab-btn" id="p2-tb3" onclick="showTab(2,3)">전문해석</button>
+<button class="tab-btn" id="p2-tb4" onclick="showTab(2,4)">주제·요지</button>
+<button class="tab-btn" id="p2-tb5" onclick="showTab(2,5)">배경지식</button>
+<button class="tab-btn" id="p2-tb6" onclick="showTab(2,6)">변형문제</button>
+</div>
+
+<div class="tab-content active" id="p2-t0">
+<h3>전문 (Original Text)</h3>
+<div class="full-passage-box">
+AI is a prolific idea generator. Human brainstorming groups tend to focus on the quality of creative ideas and almost immediately lean into variations of first suggestions, but good ideas are more likely when groups focus first on quantity. As Linus Pauling put it, &ldquo;The best way to have a good idea is to have lots of ideas.&rdquo; Psychologist Dean Keith Simonton called this the &ldquo;equal odds rule&rdquo; arguing that creative success is correlated to the total number of works created. Many studies have confirmed that creative quality comes from quantity of ideas (what Bob Sutton at a design and innovation consulting company called &ldquo;idea ratio&rdquo;), and one Stanford study pegged the number of ideas that distinguish a successful product from a failure at more than two thousand. This is why design thinking and innovation are so focused on the processes (what Utley and Klebahn call &ldquo;idea flow&rdquo;) of creating possibilities without judgment.
+</div>
+</div>
+
+<div class="tab-content" id="p2-t1">
+<h3>문장분석 (Sentence Analysis)</h3>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">①</span>AI is a prolific idea generator.</div>
+<div class="sent-slash">AI is / a prolific idea generator.</div>
+<div class="sent-ko">AI는 / 다작의(왕성한) 아이디어 생성기이다.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">2형식 (S + be + 보어)</span> ▶ <span class="gex">AI is a prolific idea generator</span> ★ <span class="gpoint">be동사 + 명사 보어 (주어 = 보어)</span></div>
+<div class="gram-item">◆ <span class="gtitle">복합명사 (idea + generator)</span> ▶ <span class="gex">idea generator</span> ★ <span class="gpoint">앞 명사가 뒤 명사를 수식하는 형태</span></div>
+</div>
+</div>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">②</span>Human brainstorming groups tend to focus on the quality of creative ideas and almost immediately lean into variations of first suggestions, but good ideas are more likely when groups focus first on quantity.</div>
+<div class="sent-slash">Human brainstorming groups / tend to focus on the quality of creative ideas / and almost immediately lean into variations of first suggestions, / but good ideas are more likely / when groups focus first on quantity.</div>
+<div class="sent-ko">인간 브레인스토밍 그룹은 / 창의적 아이디어의 질에 집중하는 경향이 있다 / 그리고 거의 즉시 첫 제안의 변형들로 빠져든다, / 그러나 좋은 아이디어들은 더 가능성이 높다 / 그룹이 먼저 양에 집중할 때.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">tend to + 동사원형 (~하는 경향이 있다)</span> ▶ <span class="gex">tend to focus on …</span> ★ <span class="gpoint">tend는 자동사 / be likely to와 유사</span></div>
+<div class="gram-item">◆ <span class="gtitle">동사구 병렬 (focus on … and lean into …)</span> ▶ <span class="gex">tend to focus on … and (to) lean into …</span> ★ <span class="gpoint">두 to부정사가 and로 연결, 두번째 to 생략</span></div>
+<div class="gram-item">◆ <span class="gtitle">시간·조건의 부사절 when</span> ▶ <span class="gex">when groups focus first on quantity</span> ★ <span class="gpoint">'when + S + V'의 부사절</span></div>
+<div class="gram-item">◆ <span class="gtitle">대조의 등위접속사 but</span> ▶ <span class="gex">… first suggestions, but good ideas are …</span> ★ <span class="gpoint">앞 절(질 중심)과 뒤 절(양 중심)의 대조</span></div>
+</div>
+</div>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">③</span>As Linus Pauling put it, &ldquo;The best way to have a good idea is to have lots of ideas.&rdquo;</div>
+<div class="sent-slash">As Linus Pauling put it, / &ldquo;The best way / to have a good idea / is / to have lots of ideas.&rdquo;</div>
+<div class="sent-ko">라이너스 폴링이 말했듯이, / "가장 좋은 방법은 / 좋은 아이디어를 가지는 / ~이다 / 많은 아이디어를 가지는 것."</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">As + S + V (~가 ~하듯이)</span> ▶ <span class="gex">As Linus Pauling put it</span> ★ <span class="gpoint">'~가 표현했듯이' (put it = 표현하다)</span></div>
+<div class="gram-item">◆ <span class="gtitle">to부정사의 형용사적 용법</span> ▶ <span class="gex">The best way to have a good idea</span> ★ <span class="gpoint">앞 명사 way를 수식</span></div>
+<div class="gram-item">◆ <span class="gtitle">to부정사의 명사적 용법 (보어)</span> ▶ <span class="gex">is to have lots of ideas</span> ★ <span class="gpoint">be동사의 보어 자리에 to부정사</span></div>
+</div>
+</div>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">④</span>Psychologist Dean Keith Simonton called this the &ldquo;equal odds rule&rdquo; arguing that creative success is correlated to the total number of works created.</div>
+<div class="sent-slash">Psychologist Dean Keith Simonton / called this / the &ldquo;equal odds rule&rdquo; / arguing that / creative success is correlated to / the total number of works created.</div>
+<div class="sent-ko">심리학자 딘 키스 사이먼튼은 / 이것을 불렀다 / "동등한 확률 규칙"이라고 / 주장하면서 / 창의적 성공은 ~과 상관관계가 있다고 / 창작된 작품들의 총 수에.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">5형식 (call + O + OC)</span> ▶ <span class="gex">called this the &ldquo;equal odds rule&rdquo;</span> ★ <span class="gpoint">'this를 ~라고 부르다' / 목적격보어로 명사구</span></div>
+<div class="gram-item">◆ <span class="gtitle">분사구문 (동시상황)</span> ▶ <span class="gex">arguing that creative success is …</span> ★ <span class="gpoint">현재분사 arguing이 동시동작 표현 / 의미상 주어 = Simonton</span></div>
+<div class="gram-item">◆ <span class="gtitle">be correlated to/with (~과 상관관계가 있다)</span> ▶ <span class="gex">is correlated to the total number</span> ★ <span class="gpoint">수동태 형태 / be related to와 유사</span></div>
+<div class="gram-item">◆ <span class="gtitle">과거분사 후치 수식 (수동)</span> ▶ <span class="gex">works created</span> ★ <span class="gpoint">works (which were) created에서 which were 생략</span></div>
+</div>
+</div>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">⑤</span>Many studies have confirmed that creative quality comes from quantity of ideas (what Bob Sutton at a design and innovation consulting company called &ldquo;idea ratio&rdquo;), and one Stanford study pegged the number of ideas that distinguish a successful product from a failure at more than two thousand.</div>
+<div class="sent-slash">Many studies have confirmed / that creative quality comes from quantity of ideas / (what Bob Sutton at a design and innovation consulting company / called &ldquo;idea ratio&rdquo;), / and one Stanford study pegged / the number of ideas / that distinguish a successful product from a failure / at more than two thousand.</div>
+<div class="sent-ko">많은 연구들이 확인해 왔다 / 창의적 질이 아이디어의 양에서 온다는 것을 / (디자인·혁신 컨설팅 회사의 밥 서튼이 / "아이디어 비율"이라고 부른 것), / 그리고 한 스탠포드 연구는 (~을) 정했다 / 아이디어의 수를 / 성공한 제품을 실패와 구별 짓는 / 2,000개 이상으로.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">현재완료 (have + p.p.)</span> ▶ <span class="gex">studies have confirmed that …</span> ★ <span class="gpoint">계속·결과 / 과거부터 현재까지 누적된 연구 결과</span></div>
+<div class="gram-item">◆ <span class="gtitle">관계대명사 what (= the thing which)</span> ▶ <span class="gex">what Bob Sutton called &ldquo;idea ratio&rdquo;</span> ★ <span class="gpoint">선행사를 포함, 명사절 역할 (삽입구)</span></div>
+<div class="gram-item">◆ <span class="gtitle">관계대명사 that (주격, 복수)</span> ▶ <span class="gex">ideas that distinguish a successful product</span> ★ <span class="gpoint">선행사 ideas를 받아 동사 distinguish 복수형</span></div>
+<div class="gram-item">◆ <span class="gtitle">distinguish A from B (A를 B와 구별하다)</span> ▶ <span class="gex">distinguish a successful product from a failure</span> ★ <span class="gpoint">tell A from B와 같은 의미</span></div>
+<div class="gram-item">◆ <span class="gtitle">peg A at B (A를 B로 정하다·고정하다)</span> ▶ <span class="gex">pegged the number … at more than two thousand</span> ★ <span class="gpoint">peg는 '못으로 박다 → 수치를 고정하다'</span></div>
+</div>
+</div>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">⑥</span>This is why design thinking and innovation are so focused on the processes (what Utley and Klebahn call &ldquo;idea flow&rdquo;) of creating possibilities without judgment.</div>
+<div class="sent-slash">This is why / design thinking and innovation / are so focused on / the processes / (what Utley and Klebahn call &ldquo;idea flow&rdquo;) / of creating possibilities / without judgment.</div>
+<div class="sent-ko">이것이 ~인 이유이다 / 디자인 사고와 혁신이 / 그토록 ~에 집중하는 / 과정에 / (Utley와 Klebahn이 "아이디어 흐름"이라고 부르는) / 가능성을 창출하는 / 판단 없이.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">This is why + 절 (이것이 ~한 이유이다)</span> ▶ <span class="gex">This is why design thinking and innovation are …</span> ★ <span class="gpoint">관계부사 why 앞 the reason 생략 / 결론 도입</span></div>
+<div class="gram-item">◆ <span class="gtitle">be focused on (~에 집중되어 있다)</span> ▶ <span class="gex">are so focused on the processes</span> ★ <span class="gpoint">수동태 형용사화 표현</span></div>
+<div class="gram-item">◆ <span class="gtitle">전치사 of + 동명사 (동격·내용)</span> ▶ <span class="gex">processes of creating possibilities</span> ★ <span class="gpoint">앞 명사 processes의 내용을 설명</span></div>
+<div class="gram-item">◆ <span class="gtitle">관계대명사 what (삽입절)</span> ▶ <span class="gex">(what Utley and Klebahn call &ldquo;idea flow&rdquo;)</span> ★ <span class="gpoint">앞 the processes를 부연 설명하는 동격적 삽입</span></div>
+</div>
+</div>
+
+</div>
+
+<div class="tab-content" id="p2-t2">
+<h3>핵심단어 및 표현</h3>
+<div class="vocab-list">
+<div class="vocab-item"><span class="vocab-en">prolific</span><span class="vocab-pos">adj.</span><span class="vocab-ko">다작의, 다산의, 풍부한</span><div class="vocab-deriv">prolifically (adv.) 다작으로 / proliferate (v.) 급증하다</div></div>
+<div class="vocab-item"><span class="vocab-en">brainstorming</span><span class="vocab-pos">n.</span><span class="vocab-ko">브레인스토밍, 자유 발상</span><div class="vocab-deriv">brainstorm (v.) 아이디어를 내다</div></div>
+<div class="vocab-item"><span class="vocab-en">tend to</span><span class="vocab-pos">phr.</span><span class="vocab-ko">~하는 경향이 있다</span><div class="vocab-deriv">tendency (n.) 경향</div></div>
+<div class="vocab-item"><span class="vocab-en">lean into</span><span class="vocab-pos">v.</span><span class="vocab-ko">~에 빠져들다, ~을 적극 수용하다</span><div class="vocab-deriv">lean (v.) 기대다, 기울다</div></div>
+<div class="vocab-item"><span class="vocab-en">variation</span><span class="vocab-pos">n.</span><span class="vocab-ko">변형, 변종, 차이</span><div class="vocab-deriv">vary (v.) 다양하다 / various (adj.) 다양한</div></div>
+<div class="vocab-item"><span class="vocab-en">quality vs quantity</span><span class="vocab-pos">phr.</span><span class="vocab-ko">질 대(對) 양</span><div class="vocab-deriv">qualitative (adj.) 질적 / quantitative (adj.) 양적</div></div>
+<div class="vocab-item"><span class="vocab-en">put it</span><span class="vocab-pos">phr.</span><span class="vocab-ko">(~라고) 표현하다, 말하다</span><div class="vocab-deriv">As one puts it, … (누군가 말하듯이)</div></div>
+<div class="vocab-item"><span class="vocab-en">equal odds rule</span><span class="vocab-pos">phr.</span><span class="vocab-ko">동등한 확률 규칙</span><div class="vocab-deriv">odds (n.) 확률, 가능성 / at odds with (~과 불일치)</div></div>
+<div class="vocab-item"><span class="vocab-en">be correlated to/with</span><span class="vocab-pos">phr.</span><span class="vocab-ko">~과 상관관계가 있다</span><div class="vocab-deriv">correlation (n.) 상관관계 / correlate (v.) 상관시키다</div></div>
+<div class="vocab-item"><span class="vocab-en">confirm</span><span class="vocab-pos">v.</span><span class="vocab-ko">확증하다, 확인하다</span><div class="vocab-deriv">confirmation (n.) 확인 / confirmed (adj.) 확정된</div></div>
+<div class="vocab-item"><span class="vocab-en">idea ratio</span><span class="vocab-pos">phr.</span><span class="vocab-ko">아이디어 비율</span><div class="vocab-deriv">ratio (n.) 비율 / proportion (n.) 비율, 부분</div></div>
+<div class="vocab-item"><span class="vocab-en">peg ... at ~</span><span class="vocab-pos">phr.</span><span class="vocab-ko">…을 ~로 정하다·고정하다</span><div class="vocab-deriv">peg (n.) 못, 고정 핀 / pegged (adj.) 고정된</div></div>
+<div class="vocab-item"><span class="vocab-en">distinguish A from B</span><span class="vocab-pos">phr.</span><span class="vocab-ko">A를 B와 구별하다</span><div class="vocab-deriv">distinct (adj.) 뚜렷한 / distinction (n.) 구별</div></div>
+<div class="vocab-item"><span class="vocab-en">design thinking</span><span class="vocab-pos">phr.</span><span class="vocab-ko">디자인 사고(법)</span><div class="vocab-deriv">design (n./v.) 설계(하다) / innovate (v.) 혁신하다</div></div>
+<div class="vocab-item"><span class="vocab-en">judgment</span><span class="vocab-pos">n.</span><span class="vocab-ko">판단, 평가</span><div class="vocab-deriv">judge (v./n.) 판단하다, 판사 / judgmental (adj.) 비판적인</div></div>
+</div>
+</div>
+
+<div class="tab-content" id="p2-t3">
+<h3>전문해석</h3>
+<div class="translation">
+AI는 다작의(왕성한) 아이디어 생성기이다. 인간의 브레인스토밍 그룹은 창의적 아이디어의 '질'에 집중하고 거의 즉시 첫 번째 제안의 변형들로 빠져드는 경향이 있지만, 좋은 아이디어는 그룹이 먼저 '양'에 집중할 때 나올 가능성이 더 높다. 라이너스 폴링이 표현했듯이, "좋은 아이디어를 갖는 가장 좋은 방법은 많은 아이디어를 갖는 것이다." 심리학자 딘 키스 사이먼튼은 이를 '동등한 확률 규칙'이라고 부르며, 창의적 성공이 창작된 작품의 총량과 상관관계가 있다고 주장했다. 많은 연구들은 창의적 질이 아이디어의 양에서 비롯된다는 것을 (디자인·혁신 컨설팅 회사의 밥 서튼이 '아이디어 비율'이라고 부른 것을) 확인해 왔으며, 한 스탠포드 연구는 성공한 제품과 실패한 제품을 구별하는 아이디어 수를 2,000개 이상으로 정했다. 이것이 디자인 사고와 혁신이 판단 없이 가능성을 창출하는 과정 — Utley와 Klebahn이 '아이디어 흐름'이라고 부른 것 — 에 그토록 집중하는 이유이다.
+</div>
+</div>
+
+<div class="tab-content" id="p2-t4">
+<h3>주제 · 요지 · 구조</h3>
+<div class="theme-block"><h4>Topic · 주제</h4><div class="content">창의성에서 아이디어의 양(quantity)이 질(quality)을 만들어낸다는 원리</div></div>
+<div class="theme-block"><h4>Main Idea · 요지</h4><div class="content">창의적 성공은 아이디어의 질을 먼저 따지기보다 충분히 많은 양의 아이디어를 만들어내는 데서 나오며, 이것이 디자인 사고와 혁신이 판단 없이 아이디어 흐름을 만들어내는 데 집중하는 근본적 이유이다.</div></div>
+<div class="theme-block"><h4>Structure · 구조 흐름</h4>
+<div class="struct-flow">
+<div class="struct-step"><b>도입 (①②)</b> — AI는 풍부한 아이디어 생성기 / 인간 그룹의 한계와 양 우선의 원칙 제시</div>
+<div class="struct-step"><b>전개 1 (③④)</b> — 폴링의 명언과 사이먼튼의 '동등한 확률 규칙'으로 양의 중요성을 권위로 뒷받침</div>
+<div class="struct-step"><b>전개 2 (⑤)</b> — 서튼의 '아이디어 비율'과 스탠포드 연구의 2,000개 수치로 실증적 근거 제시</div>
+<div class="struct-step"><b>결론 (⑥)</b> — 따라서 디자인 사고·혁신은 판단 없이 '아이디어 흐름'을 만드는 과정에 집중함</div>
+</div></div>
+</div>
+
+<div class="tab-content" id="p2-t5">
+<h3>지문의 배경지식</h3>
+<div class="bg-block">
+<h4>● 라이너스 폴링(Linus Pauling, 1901~1994)</h4>
+미국의 화학자로, 노벨화학상(1954)과 노벨평화상(1962)을 모두 수상한 유일한 단독 인물이다. 그는 "좋은 아이디어를 가지는 가장 좋은 방법은 많은 아이디어를 가지는 것"이라는 명언으로 양적 발상의 중요성을 강조했다.
+
+<h4>● Dean Keith Simonton과 'Equal-Odds Rule'</h4>
+캘리포니아 대학교 심리학자 사이먼튼은 천재성과 창의성을 연구하면서 '동등한 확률 규칙(equal-odds rule)'을 제시했다. 이 규칙의 핵심은: <b>한 사람이 만들어내는 걸작의 비율은 그가 만든 전체 작품 수에 비례한다</b>는 것이다. 따라서 위대한 창작자(베토벤, 피카소, 에디슨 등)는 단순히 '걸작'을 많이 낸 것이 아니라, '실패작'도 그만큼 많이 만들었기에 결과적으로 걸작의 절대 수가 많아진 것이다.
+
+<h4>● Bob Sutton과 'Idea Ratio'</h4>
+스탠포드 경영대학원 교수이자 IDEO와 같은 디자인·혁신 컨설팅 분야 인물로, '아이디어 비율(idea ratio)' 개념을 제시했다. 성공적 혁신을 위해서는 압도적으로 많은 아이디어 풀(pool)에서 소수의 좋은 아이디어가 선별된다는 의미이다.
+
+<h4>● Utley &amp; Klebahn의 'Idea Flow'</h4>
+스탠포드 d.school 강사진인 Jeremy Utley와 Perry Klebahn은 저서 『Ideaflow』(2022)에서, 혁신의 핵심 지표는 '단위 시간당 만들어낸 새로운 아이디어의 수'라고 주장했다. 이들의 핵심 메시지는 "아이디어의 흐름을 만들고 판단(평가)을 잠시 미뤄라"이다.
+
+<h4>● Design Thinking (디자인 사고)</h4>
+IDEO와 스탠포드 d.school에서 정립한 혁신 방법론으로, 공감(Empathize) → 정의(Define) → 발상(Ideate) → 시제품(Prototype) → 검증(Test)의 5단계로 구성된다. 'Ideate' 단계에서 가장 강조되는 원칙이 바로 본문이 말하는 '판단 없이 양적으로 아이디어를 쏟아내라(defer judgment, go for quantity)'이다.
+
+<h4>● AI와 창의성의 결합</h4>
+ChatGPT 등 생성형 AI는 인간이 도달하기 어려운 양의 아이디어를 빠르게 만들어낸다. 본문은 이런 AI의 특성이 창의성 이론('양이 질을 만든다')과 잘 부합한다는 점을 첫 문장에서 부각시키고 있다.
+</div>
+</div>
+
+<div class="tab-content" id="p2-t6">
+<h3>변형문제 (Interactive Quiz)</h3>
+
+<div class="quiz-q" id="q2-1">
+<div class="q-title">1. 윗글의 주제로 가장 적절한 것은?</div>
+<div class="q-options">
+<button class="q-opt" onclick="check('q2-1',this,false,'AI의 한계는 본문에서 다루지 않는다.')"><span class="onum">①</span>AI 기술의 한계와 인간 창의성의 우월성</button>
+<button class="q-opt" onclick="check('q2-1',this,false,'본문은 오히려 질 중심 사고의 한계를 지적한다.')"><span class="onum">②</span>창의적 아이디어의 질을 평가하는 새로운 기준</button>
+<button class="q-opt" onclick="check('q2-1',this,true,'본문 전체가 \‘양에서 질이 나온다\’는 원리와 그것이 디자인 사고에 끼친 영향을 설명한다.')"><span class="onum">③</span>창의적 성공을 만드는 핵심으로서의 아이디어의 양</button>
+<button class="q-opt" onclick="check('q2-1',this,false,'폴링과 사이먼튼은 사례일 뿐, 비교가 핵심이 아니다.')"><span class="onum">④</span>위대한 과학자들의 창의적 사고방식 비교</button>
+<button class="q-opt" onclick="check('q2-1',this,false,'스탠포드 연구는 본문의 사례 중 하나일 뿐이다.')"><span class="onum">⑤</span>스탠포드 대학교의 혁신 연구 방법론 소개</button>
+</div>
+<div class="q-fb" id="fb-q2-1"></div>
+<button class="q-reset" onclick="resetQuiz('q2-1')">↺ 다시 풀기</button>
+</div>
+
+<div class="quiz-q" id="q2-2">
+<div class="q-title">2. 다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+<div class="q-stem en">Human brainstorming groups tend to focus on the quality of creative ideas and almost immediately lean into variations of first suggestions, but good ideas are more likely when groups focus first on _______________.</div>
+<div class="q-options">
+<button class="q-opt" onclick="check('q2-2',this,false,'질(quality)은 그룹이 흔히 빠지는 함정으로 본문에서 부정적으로 언급된다.')"><span class="onum">①</span>quality</button>
+<button class="q-opt" onclick="check('q2-2',this,true,'폴링·사이먼튼·서튼·스탠포드 연구 모두 \‘양(quantity)\’이 질을 만든다는 원리를 뒷받침한다.')"><span class="onum">②</span>quantity</button>
+<button class="q-opt" onclick="check('q2-2',this,false,'다양성(diversity)은 본문의 핵심 표현이 아니다.')"><span class="onum">③</span>diversity</button>
+<button class="q-opt" onclick="check('q2-2',this,false,'합의(consensus)에 대한 언급은 본문에 없다.')"><span class="onum">④</span>consensus</button>
+<button class="q-opt" onclick="check('q2-2',this,false,'전문성(expertise)은 본문의 주장과 무관하다.')"><span class="onum">⑤</span>expertise</button>
+</div>
+<div class="q-fb" id="fb-q2-2"></div>
+<button class="q-reset" onclick="resetQuiz('q2-2')">↺ 다시 풀기</button>
+</div>
+
+<div class="quiz-q" id="q2-3">
+<div class="q-title">3. 다음 밑줄 친 부분 중 어법상 어색한 것은?</div>
+<div class="q-stem en">Many studies have <u>①confirmed</u> that creative quality comes from quantity of ideas (<u>②what</u> Bob Sutton at a design and innovation consulting company called &ldquo;idea ratio&rdquo;), and one Stanford study pegged the number of ideas <u>③that</u> distinguish a successful product from a failure at more than two thousand. This is <u>④because</u> design thinking and innovation are so focused on the processes (what Utley and Klebahn call &ldquo;idea flow&rdquo;) of <u>⑤creating</u> possibilities without judgment.</div>
+<div class="q-options">
+<button class="q-opt" onclick="check('q2-3',this,false,'현재완료 have confirmed (계속·결과)로 적절하다.')"><span class="onum">①</span>confirmed</button>
+<button class="q-opt" onclick="check('q2-3',this,false,'선행사를 포함한 관계대명사 what (= the thing which)으로 적절하다.')"><span class="onum">②</span>what</button>
+<button class="q-opt" onclick="check('q2-3',this,false,'복수 ideas를 받는 관계대명사 that(주격)으로 적절하다.')"><span class="onum">③</span>that</button>
+<button class="q-opt" onclick="check('q2-3',this,true,'\‘이것이 ~인 이유이다(결과)\’를 나타내려면 because → why가 되어야 한다. (This is why = 결과/이유 도입)')"><span class="onum">④</span>because</button>
+<button class="q-opt" onclick="check('q2-3',this,false,'전치사 of 뒤의 동명사 creating으로 적절하다.')"><span class="onum">⑤</span>creating</button>
+</div>
+<div class="q-fb" id="fb-q2-3"></div>
+<button class="q-reset" onclick="resetQuiz('q2-3')">↺ 다시 풀기</button>
+</div>
+
+<div class="quiz-q" id="q2-4">
+<div class="q-title">4. 윗글의 내용과 일치하지 <u>않는</u> 것은?</div>
+<div class="q-options">
+<button class="q-opt" onclick="check('q2-4',this,false,'본문 첫 문장에 명시되어 있다.')"><span class="onum">①</span>AI는 다작의 아이디어 생성기로 묘사된다.</button>
+<button class="q-opt" onclick="check('q2-4',this,false,'본문 ②에 직접 언급된 인간 그룹의 경향이다.')"><span class="onum">②</span>인간 브레인스토밍 그룹은 첫 제안의 변형들로 즉시 빠져드는 경향이 있다.</button>
+<button class="q-opt" onclick="check('q2-4',this,false,'사이먼튼은 \‘창의적 성공이 작품의 총 수와 상관관계가 있다\’고 주장했다.')"><span class="onum">③</span>사이먼튼은 창의적 성공이 만들어진 작품의 총 수와 관련이 있다고 주장했다.</button>
+<button class="q-opt" onclick="check('q2-4',this,true,'\‘idea ratio\’를 만든 사람은 Bob Sutton이고 \‘idea flow\’가 Utley & Klebahn이다. 본문에서 두 인물·용어가 다르다.')"><span class="onum">④</span>Utley와 Klebahn은 '아이디어 비율(idea ratio)'이라는 개념을 제시했다.</button>
+<button class="q-opt" onclick="check('q2-4',this,false,'스탠포드 연구는 성공/실패 구별 아이디어 수를 \‘2,000개 이상\’으로 정했다.')"><span class="onum">⑤</span>스탠포드 연구는 성공한 제품을 실패와 구별 짓는 아이디어 수를 2,000개 이상으로 정했다.</button>
+</div>
+<div class="q-fb" id="fb-q2-4"></div>
+<button class="q-reset" onclick="resetQuiz('q2-4')">↺ 다시 풀기</button>
+</div>
+
+<div class="quiz-q" id="q2-5">
+<div class="q-title">5. 다음 글 다음에 이어질 글의 순서로 가장 적절한 것은?</div>
+<div class="q-stem">AI is a prolific idea generator. Human brainstorming groups tend to focus on the quality of creative ideas and almost immediately lean into variations of first suggestions, but good ideas are more likely when groups focus first on quantity.<br><br>(A) Many studies have confirmed that creative quality comes from quantity of ideas (what Bob Sutton at a design and innovation consulting company called &ldquo;idea ratio&rdquo;), and one Stanford study pegged the number of ideas that distinguish a successful product from a failure at more than two thousand.<br><br>(B) As Linus Pauling put it, &ldquo;The best way to have a good idea is to have lots of ideas.&rdquo; Psychologist Dean Keith Simonton called this the &ldquo;equal odds rule&rdquo; arguing that creative success is correlated to the total number of works created.<br><br>(C) This is why design thinking and innovation are so focused on the processes (what Utley and Klebahn call &ldquo;idea flow&rdquo;) of creating possibilities without judgment.</div>
+<div class="q-options">
+<button class="q-opt" onclick="check('q2-5',this,false,'(A)의 실증 연구는 (B)의 권위적 진술 다음에 와야 자연스럽다.')"><span class="onum">①</span>(A) - (B) - (C)</button>
+<button class="q-opt" onclick="check('q2-5',this,false,'(C)의 \‘This is why\’는 결론이므로 마지막에 위치한다.')"><span class="onum">②</span>(A) - (C) - (B)</button>
+<button class="q-opt" onclick="check('q2-5',this,true,'(B) 폴링·사이먼튼의 명언/주장 → (A) 실증 연구로 양 → 질 입증 → (C) 결과적으로 디자인 사고가 양에 집중하는 이유. 가장 자연스러운 흐름이다.')"><span class="onum">③</span>(B) - (A) - (C)</button>
+<button class="q-opt" onclick="check('q2-5',this,false,'(C)의 결론은 마지막에 와야 한다.')"><span class="onum">④</span>(B) - (C) - (A)</button>
+<button class="q-opt" onclick="check('q2-5',this,false,'(C)의 \‘This is why\’는 도입 직후에 올 수 없다.')"><span class="onum">⑤</span>(C) - (A) - (B)</button>
+</div>
+<div class="q-fb" id="fb-q2-5"></div>
+<button class="q-reset" onclick="resetQuiz('q2-5')">↺ 다시 풀기</button>
+</div>
+
+<div class="essay-q">
+<div class="et">[서술형 1] 빈칸 요약</div>
+<div class="es">다음은 윗글의 요지를 한 문장으로 요약한 것이다. 빈칸 (A), (B)에 들어갈 말을 본문에서 찾아 쓰시오.</div>
+<div class="ec">조건: 본문에 등장한 단어를 그대로 활용할 것</div>
+<div class="es"><i>Creative (A) ___________ comes from the (B) ___________ of ideas, which is why design thinking emphasizes generating possibilities without judgment.</i></div>
+<textarea placeholder="(A): &#10;(B): "></textarea>
+<button class="ans-toggle" onclick="toggleAns('ans2-1')">▼ 모범답안 보기</button>
+<div class="model-ans" id="ans2-1">
+<b>(A)</b> quality &nbsp;|&nbsp; <b>(B)</b> quantity<br>
+<b>해설:</b> 본문 ⑤의 "creative quality comes from quantity of ideas"가 그대로 정답의 근거이다.
+</div>
+</div>
+
+<div class="essay-q">
+<div class="et">[서술형 2] 영작 서술형</div>
+<div class="es">'동등한 확률 규칙(equal odds rule)'이 무엇을 의미하는지, 그리고 그것이 본문의 주장과 어떻게 연결되는지 영어로 서술하시오.</div>
+<div class="ec">조건: 완전한 영어 문장 1~2개, 30~40단어 내외, "creative success", "total number of works", "quantity" 중 두 표현 이상 사용</div>
+<textarea placeholder="답안을 작성하세요."></textarea>
+<button class="ans-toggle" onclick="toggleAns('ans2-2')">▼ 모범답안 보기</button>
+<div class="model-ans" id="ans2-2">
+<b>모범답안 예시:</b><br>
+The "equal odds rule" means that creative success is correlated to the total number of works created. This supports the passage&apos;s argument that creative quality comes from the quantity of ideas, not from focusing on quality first.<br><br>
+<b>핵심 키워드:</b> creative success / correlated to / total number of works / quantity of ideas / quality
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="passage" id="p3">
+<div class="passage-header">
+<h2>13-3. The Body as a Bridge to Empathy</h2>
+<div class="subj">내수용 감각과 공감의 신체적 통로</div>
+</div>
+<div class="tabs">
+<button class="tab-btn active" id="p3-tb0" onclick="showTab(3,0)">전문</button>
+<button class="tab-btn" id="p3-tb1" onclick="showTab(3,1)">문장분석</button>
+<button class="tab-btn" id="p3-tb2" onclick="showTab(3,2)">핵심단어·표현</button>
+<button class="tab-btn" id="p3-tb3" onclick="showTab(3,3)">전문해석</button>
+<button class="tab-btn" id="p3-tb4" onclick="showTab(3,4)">주제·요지</button>
+<button class="tab-btn" id="p3-tb5" onclick="showTab(3,5)">배경지식</button>
+<button class="tab-btn" id="p3-tb6" onclick="showTab(3,6)">변형문제</button>
+</div>
+
+<div class="tab-content active" id="p3-t0">
+<h3>전문 (Original Text)</h3>
+<div class="full-passage-box">
+Becoming aware of our internal sensations can help us handle our own emotions. Perhaps more surprisingly, the body&apos;s interoceptive faculty can also bring us into closer contact with other people&apos;s emotions. That&apos;s because the brain, on its own, has no direct access to the contents of other people&apos;s minds, no way to feel what others are feeling. Interpreting others&apos; spoken words and facial expressions may yield only a coolly abstract sense of the emotions that stir within. The body acts as a critical conduit, supplying the brain with the visceral information it lacks. It does so in this way: When interacting with other people, we subtly and unconsciously mimic their facial expressions, gestures, posture, and vocal pitch. Then, via the interoception of our own bodies&apos; signals, we perceive what the other person is feeling because we feel it in ourselves. We bring other people&apos;s feelings onboard, and the body is the bridge. In an act similar to taking a bite off our partner&apos;s plate, or borrowing an earbud to hear the song our friend is listening to, we are sampling their emotions.
+</div>
+</div>
+
+<div class="tab-content" id="p3-t1">
+<h3>문장분석 (Sentence Analysis)</h3>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">①</span>Becoming aware of our internal sensations can help us handle our own emotions.</div>
+<div class="sent-slash">Becoming aware of our internal sensations / can help us / handle our own emotions.</div>
+<div class="sent-ko">우리의 내적 감각을 인식하게 되는 것은 / 우리가 ~할 수 있도록 도와줄 수 있다 / 우리 자신의 감정을 다루도록.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">동명사 주어 (단수 취급)</span> ▶ <span class="gex">Becoming aware … can help …</span> ★ <span class="gpoint">동명사구 주어는 단수 동사로 받음</span></div>
+<div class="gram-item">◆ <span class="gtitle">help + O + (to) 동사원형</span> ▶ <span class="gex">help us handle our own emotions</span> ★ <span class="gpoint">to 생략 가능 / 어법 출제 빈출</span></div>
+<div class="gram-item">◆ <span class="gtitle">become aware of (~을 알아차리다)</span> ▶ <span class="gex">Becoming aware of our internal sensations</span> ★ <span class="gpoint">be aware of와 의미 유사 / become은 변화 강조</span></div>
+</div>
+</div>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">②</span>Perhaps more surprisingly, the body&apos;s interoceptive faculty can also bring us into closer contact with other people&apos;s emotions.</div>
+<div class="sent-slash">Perhaps more surprisingly, / the body&apos;s interoceptive faculty / can also bring us / into closer contact / with other people&apos;s emotions.</div>
+<div class="sent-ko">아마 더 놀랍게도, / 신체의 내수용 감각 능력은 / 또한 우리를 데려다 줄 수 있다 / 더 가까운 접촉으로 / 다른 사람들의 감정과의.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">문장 부사 + 비교급 부사</span> ▶ <span class="gex">Perhaps more surprisingly</span> ★ <span class="gpoint">surprisingly가 문장 전체를 수식 / 콤마로 분리</span></div>
+<div class="gram-item">◆ <span class="gtitle">bring O into ~ (O를 ~상태로 이끌다)</span> ▶ <span class="gex">bring us into closer contact with …</span> ★ <span class="gpoint">into = 변화·결과 / 5형식 유사 구조</span></div>
+<div class="gram-item">◆ <span class="gtitle">비교급 + 명사 (closer contact)</span> ▶ <span class="gex">closer contact with other people&apos;s emotions</span> ★ <span class="gpoint">close → closer 비교급으로 명사 수식</span></div>
+</div>
+</div>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">③</span>That&apos;s because the brain, on its own, has no direct access to the contents of other people&apos;s minds, no way to feel what others are feeling.</div>
+<div class="sent-slash">That&apos;s because / the brain, on its own, / has no direct access to / the contents of other people&apos;s minds, / no way to feel / what others are feeling.</div>
+<div class="sent-ko">그것은 ~ 때문이다 / 뇌가, 그 자체로는, / 직접적인 접근을 가지지 못한다 / 다른 사람들의 마음의 내용에 / 어떤 방법도 없다 / 다른 사람들이 무엇을 느끼는지를 느낄.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">That is because (그것은 ~ 때문이다)</span> ▶ <span class="gex">That&apos;s because the brain …</span> ★ <span class="gpoint">결과 + because + 원인 / 'That is why'와 구별</span></div>
+<div class="gram-item">◆ <span class="gtitle">관계대명사 what (= the thing which)</span> ▶ <span class="gex">what others are feeling</span> ★ <span class="gpoint">선행사 포함 / feel의 목적어절</span></div>
+<div class="gram-item">◆ <span class="gtitle">동격의 콤마 명사구 (요약·부연)</span> ▶ <span class="gex">no direct access …, no way to feel …</span> ★ <span class="gpoint">두 명사구가 부정의 의미를 강조</span></div>
+<div class="gram-item">◆ <span class="gtitle">on its own (= by itself, 그 자체로는)</span> ▶ <span class="gex">the brain, on its own, has no …</span> ★ <span class="gpoint">관용 표현 / alone과 유사</span></div>
+</div>
+</div>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">④</span>Interpreting others&apos; spoken words and facial expressions may yield only a coolly abstract sense of the emotions that stir within.</div>
+<div class="sent-slash">Interpreting others&apos; spoken words and facial expressions / may yield / only a coolly abstract sense / of the emotions / that stir within.</div>
+<div class="sent-ko">다른 사람의 말과 얼굴 표정을 해석하는 것은 / 만들어낼 뿐일 수 있다 / 단지 차갑고 추상적인 인식을 / 감정들에 대한 / 내면에서 일어나는.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">동명사 주어 (단수 취급)</span> ▶ <span class="gex">Interpreting … may yield …</span> ★ <span class="gpoint">단수 동사로 받음</span></div>
+<div class="gram-item">◆ <span class="gtitle">관계대명사 that (주격, 복수)</span> ▶ <span class="gex">emotions that stir within</span> ★ <span class="gpoint">선행사 emotions + 동사 stir 복수형</span></div>
+<div class="gram-item">◆ <span class="gtitle">부사 + 형용사 + 명사 (수식 어순)</span> ▶ <span class="gex">a coolly abstract sense</span> ★ <span class="gpoint">coolly가 abstract를 수식 / 어순 출제 가능</span></div>
+<div class="gram-item">◆ <span class="gtitle">과거분사 형용사 (spoken)</span> ▶ <span class="gex">others&apos; spoken words</span> ★ <span class="gpoint">'말해진 → 발화된' 수동 의미</span></div>
+</div>
+</div>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">⑤</span>The body acts as a critical conduit, supplying the brain with the visceral information it lacks.</div>
+<div class="sent-slash">The body acts as / a critical conduit, / supplying the brain / with the visceral information / it lacks.</div>
+<div class="sent-ko">신체는 ~로 작용한다 / 결정적인 통로로, / 뇌에게 공급하면서 / 본능적·내장 감각 정보를 / 그것(뇌)이 결여한.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">act as + 명사 (~로서 기능하다)</span> ▶ <span class="gex">acts as a critical conduit</span> ★ <span class="gpoint">function as / serve as와 유사</span></div>
+<div class="gram-item">◆ <span class="gtitle">분사구문 (동시상황)</span> ▶ <span class="gex">supplying the brain with …</span> ★ <span class="gpoint">현재분사 supplying / 의미상 주어 = body</span></div>
+<div class="gram-item">◆ <span class="gtitle">supply A with B (A에게 B를 공급하다)</span> ▶ <span class="gex">supplying the brain with the visceral information</span> ★ <span class="gpoint">provide A with B와 동일 패턴</span></div>
+<div class="gram-item">◆ <span class="gtitle">관계대명사 that 생략 (목적격)</span> ▶ <span class="gex">information (that) it lacks</span> ★ <span class="gpoint">선행사 information의 lacks의 목적어</span></div>
+</div>
+</div>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">⑥</span>It does so in this way: When interacting with other people, we subtly and unconsciously mimic their facial expressions, gestures, posture, and vocal pitch.</div>
+<div class="sent-slash">It does so in this way: / When interacting with other people, / we subtly and unconsciously mimic / their facial expressions, gestures, posture, and vocal pitch.</div>
+<div class="sent-ko">그것은 다음과 같이 그렇게 한다: / 다른 사람들과 상호작용할 때, / 우리는 미묘하고 무의식적으로 모방한다 / 그들의 표정, 몸짓, 자세, 그리고 목소리 톤을.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">대동사 do so (= acts as a conduit)</span> ▶ <span class="gex">It does so in this way</span> ★ <span class="gpoint">앞 문장의 동사구 대신</span></div>
+<div class="gram-item">◆ <span class="gtitle">분사구문 (시간) when V-ing</span> ▶ <span class="gex">When interacting with other people</span> ★ <span class="gpoint">When (we are) interacting에서 we are 생략</span></div>
+<div class="gram-item">◆ <span class="gtitle">A, B, C, and D 4요소 병렬</span> ▶ <span class="gex">expressions, gestures, posture, and vocal pitch</span> ★ <span class="gpoint">동일 품사 명사 나열</span></div>
+<div class="gram-item">◆ <span class="gtitle">부사 병렬 (subtly and unconsciously)</span> ▶ <span class="gex">subtly and unconsciously mimic</span> ★ <span class="gpoint">두 부사가 같은 동사 mimic을 수식</span></div>
+</div>
+</div>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">⑦</span>Then, via the interoception of our own bodies&apos; signals, we perceive what the other person is feeling because we feel it in ourselves.</div>
+<div class="sent-slash">Then, / via the interoception / of our own bodies&apos; signals, / we perceive / what the other person is feeling / because we feel it in ourselves.</div>
+<div class="sent-ko">그런 다음, / 내수용 감각을 통해 / 우리 자신의 신체의 신호의, / 우리는 인식한다 / 상대방이 무엇을 느끼고 있는지를 / 왜냐하면 우리가 그것을 우리 자신 안에서 느끼기 때문이다.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">전치사 via (~을 통해, by means of)</span> ▶ <span class="gex">via the interoception of …</span> ★ <span class="gpoint">through, by way of와 유사</span></div>
+<div class="gram-item">◆ <span class="gtitle">관계대명사 what (perceive의 목적어)</span> ▶ <span class="gex">what the other person is feeling</span> ★ <span class="gpoint">명사절 / 선행사 포함</span></div>
+<div class="gram-item">◆ <span class="gtitle">재귀대명사 ourselves</span> ▶ <span class="gex">we feel it in ourselves</span> ★ <span class="gpoint">주어 we와 동일한 대상 가리킴</span></div>
+</div>
+</div>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">⑧</span>We bring other people&apos;s feelings onboard, and the body is the bridge.</div>
+<div class="sent-slash">We bring / other people&apos;s feelings / onboard, / and the body is the bridge.</div>
+<div class="sent-ko">우리는 들여온다 / 다른 사람들의 감정을 / 우리 안으로, / 그리고 신체가 그 다리이다.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">bring O onboard (O를 안으로 들이다)</span> ▶ <span class="gex">bring other people&apos;s feelings onboard</span> ★ <span class="gpoint">onboard = 받아들인다는 비유적 표현</span></div>
+<div class="gram-item">◆ <span class="gtitle">은유 (metaphor) the body is the bridge</span> ▶ <span class="gex">the body is the bridge</span> ★ <span class="gpoint">A is B 직설 비유 / 본문의 핵심 메시지</span></div>
+<div class="gram-item">◆ <span class="gtitle">등위접속사 and (병렬절)</span> ▶ <span class="gex">We bring …, and the body is …</span> ★ <span class="gpoint">두 독립절을 연결</span></div>
+</div>
+</div>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">⑨</span>In an act similar to taking a bite off our partner&apos;s plate, or borrowing an earbud to hear the song our friend is listening to, we are sampling their emotions.</div>
+<div class="sent-slash">In an act / similar to taking a bite off our partner&apos;s plate, / or borrowing an earbud / to hear the song / our friend is listening to, / we are sampling / their emotions.</div>
+<div class="sent-ko">행위에서 / 파트너의 접시에서 한 입 먹는 것과 비슷한, / 또는 이어버드를 빌리는 것과 / 노래를 듣기 위해 / 친구가 듣고 있는, / 우리는 (감정을) 맛보고 있다 / 그들의 감정을.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">similar to + 동명사 (~과 유사한)</span> ▶ <span class="gex">similar to taking a bite … or borrowing …</span> ★ <span class="gpoint">전치사 to 뒤에 동명사 두 개 병렬</span></div>
+<div class="gram-item">◆ <span class="gtitle">to부정사의 부사적 용법 (목적)</span> ▶ <span class="gex">borrowing an earbud to hear the song</span> ★ <span class="gpoint">'~하기 위해' 의미 / in order to와 유사</span></div>
+<div class="gram-item">◆ <span class="gtitle">관계대명사 생략 (목적격)</span> ▶ <span class="gex">the song (that/which) our friend is listening to</span> ★ <span class="gpoint">선행사 song 뒤 관계대명사 생략</span></div>
+<div class="gram-item">◆ <span class="gtitle">현재진행 (be V-ing)</span> ▶ <span class="gex">we are sampling their emotions</span> ★ <span class="gpoint">현재 일어나는 동작 / 비유적 표현</span></div>
+</div>
+</div>
+
+</div>
+
+<div class="tab-content" id="p3-t2">
+<h3>핵심단어 및 표현</h3>
+<div class="vocab-list">
+<div class="vocab-item"><span class="vocab-en">internal sensation</span><span class="vocab-pos">phr.</span><span class="vocab-ko">내적 감각, 신체 내부 감각</span><div class="vocab-deriv">internal (adj.) 내부의 / external (반의어)</div></div>
+<div class="vocab-item"><span class="vocab-en">interoceptive</span><span class="vocab-pos">adj.</span><span class="vocab-ko">내수용 감각의</span><div class="vocab-deriv">interoception (n.) 내수용 감각 / exteroception (외수용 감각)</div></div>
+<div class="vocab-item"><span class="vocab-en">faculty</span><span class="vocab-pos">n.</span><span class="vocab-ko">능력, (지적·감각) 기능</span><div class="vocab-deriv">faculty member (교수진), mental faculty (정신 능력)</div></div>
+<div class="vocab-item"><span class="vocab-en">on its own</span><span class="vocab-pos">phr.</span><span class="vocab-ko">홀로, 그 자체로</span><div class="vocab-deriv">by itself, alone과 유사</div></div>
+<div class="vocab-item"><span class="vocab-en">have access to</span><span class="vocab-pos">phr.</span><span class="vocab-ko">~에 접근하다, ~을 이용할 수 있다</span><div class="vocab-deriv">accessible (adj.) 접근 가능한</div></div>
+<div class="vocab-item"><span class="vocab-en">interpret</span><span class="vocab-pos">v.</span><span class="vocab-ko">해석하다, 통역하다</span><div class="vocab-deriv">interpretation (n.) 해석 / interpreter (n.) 통역사</div></div>
+<div class="vocab-item"><span class="vocab-en">facial expression</span><span class="vocab-pos">phr.</span><span class="vocab-ko">얼굴 표정</span><div class="vocab-deriv">facial (adj.) 얼굴의 / express (v.) 표현하다</div></div>
+<div class="vocab-item"><span class="vocab-en">yield</span><span class="vocab-pos">v.</span><span class="vocab-ko">산출하다, 만들어내다, 양보하다</span><div class="vocab-deriv">yield to (~에 굴복하다) / yielding (adj.) 굴복하는</div></div>
+<div class="vocab-item"><span class="vocab-en">abstract</span><span class="vocab-pos">adj.</span><span class="vocab-ko">추상적인</span><div class="vocab-deriv">abstraction (n.) 추상 / concrete (반의어)</div></div>
+<div class="vocab-item"><span class="vocab-en">stir</span><span class="vocab-pos">v.</span><span class="vocab-ko">휘젓다, (감정이) 일다·끓어오르다</span><div class="vocab-deriv">stirring (adj.) 감동적인</div></div>
+<div class="vocab-item"><span class="vocab-en">conduit</span><span class="vocab-pos">n.</span><span class="vocab-ko">도관, (정보·감정의) 통로</span><div class="vocab-deriv">channel과 유사 / pipe(파이프)에서 유래</div></div>
+<div class="vocab-item"><span class="vocab-en">visceral</span><span class="vocab-pos">adj.</span><span class="vocab-ko">본능적인, 내장(內臟)의</span><div class="vocab-deriv">viscera (n.) 내장 / cerebral (반의어, 이성적)</div></div>
+<div class="vocab-item"><span class="vocab-en">subtly</span><span class="vocab-pos">adv.</span><span class="vocab-ko">미묘하게, 교묘히</span><div class="vocab-deriv">subtle (adj.) 미묘한 / subtlety (n.) 미묘함</div></div>
+<div class="vocab-item"><span class="vocab-en">unconsciously</span><span class="vocab-pos">adv.</span><span class="vocab-ko">무의식적으로</span><div class="vocab-deriv">unconscious (adj.) 무의식의 / consciously (반의어)</div></div>
+<div class="vocab-item"><span class="vocab-en">mimic</span><span class="vocab-pos">v.</span><span class="vocab-ko">모방하다, 흉내 내다</span><div class="vocab-deriv">mimicry (n.) 모방 / imitator (모방자)</div></div>
+<div class="vocab-item"><span class="vocab-en">posture</span><span class="vocab-pos">n.</span><span class="vocab-ko">자세, 태도</span><div class="vocab-deriv">postural (adj.) 자세의 / stance (n.) 자세</div></div>
+<div class="vocab-item"><span class="vocab-en">vocal pitch</span><span class="vocab-pos">phr.</span><span class="vocab-ko">목소리의 음높이</span><div class="vocab-deriv">vocal (adj.) 음성의 / pitch (n.) 음높이</div></div>
+<div class="vocab-item"><span class="vocab-en">via</span><span class="vocab-pos">prep.</span><span class="vocab-ko">~을 경유하여, ~을 통해</span><div class="vocab-deriv">through, by way of와 유사</div></div>
+<div class="vocab-item"><span class="vocab-en">perceive</span><span class="vocab-pos">v.</span><span class="vocab-ko">인식하다, 알아차리다</span><div class="vocab-deriv">perception (n.) 인식 / perceptive (adj.) 통찰력 있는</div></div>
+<div class="vocab-item"><span class="vocab-en">bring onboard</span><span class="vocab-pos">phr.</span><span class="vocab-ko">받아들이다, (배·팀에) 들이다</span><div class="vocab-deriv">onboard (adv.) 탑승하여, 합류하여</div></div>
+<div class="vocab-item"><span class="vocab-en">sample</span><span class="vocab-pos">v.</span><span class="vocab-ko">맛보다, 시식하다, 시험적으로 경험하다</span><div class="vocab-deriv">sample (n.) 견본 / sampling (n.) 표본 추출</div></div>
+</div>
+</div>
+
+<div class="tab-content" id="p3-t3">
+<h3>전문해석</h3>
+<div class="translation">
+우리의 내적 감각을 인식하게 되는 것은 우리 자신의 감정을 다루는 데 도움이 될 수 있다. 아마도 더 놀랍게도, 신체의 내수용 감각 능력은 또한 우리를 다른 사람들의 감정과 더 가까이 접촉할 수 있게 해준다. 그것은 뇌가 그 자체로는 다른 사람들의 마음의 내용에 직접 접근할 수 없으며, 다른 사람들이 무엇을 느끼는지 느낄 방법이 없기 때문이다. 다른 사람의 말과 얼굴 표정을 해석하는 것은 단지 내면에서 일어나는 감정에 대한 차갑고 추상적인 인식만을 만들어낼 수 있다. 신체는 결정적인 통로 역할을 하며, 뇌가 결여하고 있는 본능적·내장 감각 정보를 뇌에 공급한다. 그것은 다음과 같은 방식으로 그 역할을 한다: 다른 사람들과 상호작용할 때 우리는 미묘하고 무의식적으로 그들의 표정, 몸짓, 자세, 그리고 목소리의 톤을 모방한다. 그런 다음 우리 자신의 신체 신호에 대한 내수용 감각을 통해, 우리는 상대방이 무엇을 느끼는지 인식한다. 왜냐하면 우리가 그것을 우리 자신 안에서 느끼기 때문이다. 우리는 다른 사람들의 감정을 우리 안으로 들여오며, 신체가 바로 그 다리이다. 마치 파트너의 접시에서 한 입 베어 무는 것이나, 친구가 듣고 있는 노래를 듣기 위해 이어버드 한쪽을 빌리는 것과 비슷한 행위로, 우리는 그들의 감정을 '맛보고' 있는 것이다.
+</div>
+</div>
+
+<div class="tab-content" id="p3-t4">
+<h3>주제 · 요지 · 구조</h3>
+<div class="theme-block"><h4>Topic · 주제</h4><div class="content">신체(내수용 감각)가 타인의 감정을 이해하는 결정적 통로(다리) 역할을 한다는 점</div></div>
+<div class="theme-block"><h4>Main Idea · 요지</h4><div class="content">뇌만으로는 타인의 감정에 직접 접근할 수 없지만, 우리는 무의식적으로 상대의 표정·몸짓·자세·목소리를 모방하고 그것을 신체의 내수용 감각으로 다시 느낌으로써 타인의 감정을 받아들이며, 따라서 신체가 공감의 다리(bridge) 역할을 한다.</div></div>
+<div class="theme-block"><h4>Structure · 구조 흐름</h4>
+<div class="struct-flow">
+<div class="struct-step"><b>도입 (①②)</b> — 내수용 감각의 자기 감정 처리 기능 → 더 놀라운 점: 타인 감정과의 연결</div>
+<div class="struct-step"><b>전개 1 — 문제 제시 (③④)</b> — 뇌만으로는 타인의 감정에 직접 접근 불가 / 말·표정 해석은 추상적일 뿐</div>
+<div class="struct-step"><b>전개 2 — 해결 메커니즘 (⑤⑥⑦)</b> — 신체가 통로 → 무의식적 모방 → 내수용 감각으로 자기 안에서 느낌</div>
+<div class="struct-step"><b>결론 (⑧⑨)</b> — 신체는 다리이며, 우리는 상대의 감정을 한 입 맛보듯 '샘플링'한다</div>
+</div></div>
+</div>
+
+<div class="tab-content" id="p3-t5">
+<h3>지문의 배경지식</h3>
+<div class="bg-block">
+<h4>● 내수용 감각(Interoception)이란?</h4>
+인간의 감각은 크게 세 가지로 분류된다.<br>
+① <b>외수용 감각(exteroception)</b>: 시각·청각·촉각 등 외부 자극<br>
+② <b>고유수용 감각(proprioception)</b>: 근육·관절 위치 감각<br>
+③ <b>내수용 감각(interoception)</b>: 심장박동·호흡·소화·체온 등 신체 내부 신호<br>
+이 중 내수용 감각은 최근 신경과학과 심리학에서 가장 주목받는 영역이다. 뇌섬엽(insula)이 핵심 처리 영역으로 알려져 있으며, 자기 감정 인식·정서 조절·공감 능력과 밀접하게 연관된다.
+
+<h4>● 안토니오 다마지오(Antonio Damasio)와 신체 표지(somatic marker) 가설</h4>
+미국 신경과학자 다마지오는 "감정은 곧 신체이다"라는 관점에서, 우리가 결정과 감정을 처리할 때 내장·근육 등 신체 신호(somatic markers)를 활용한다고 주장했다. 본문의 '신체가 다리(bridge)'라는 비유는 다마지오 이론과 직접 연결된다.
+
+<h4>● 거울 뉴런(Mirror Neurons)과 무의식적 모방</h4>
+1990년대 이탈리아 연구진(자코모 리졸라티)이 발견한 거울 뉴런은, 타인의 행동을 보기만 해도 마치 자기가 그 행동을 하는 것처럼 발화하는 신경세포이다. 본문에서 말하는 '미묘하고 무의식적인 표정·자세·목소리 모방'은 거울 뉴런 시스템과 정서 전염(emotional contagion)으로 설명된다.
+
+<h4>● 신체화된 인지(Embodied Cognition)</h4>
+"마음은 뇌만이 아니라 몸 전체에 분산되어 있다"는 인지과학의 관점이다. 본문은 이 패러다임의 대표적 논거로 활용될 수 있다 — 즉, 공감(empathy) 같은 고차원 감정 처리도 추상적 사고가 아니라 신체적 모방과 내수용 감각이라는 구체적 신체 과정을 통해 이뤄진다는 점이다.
+
+<h4>● Sampling Emotions의 비유</h4>
+마지막 문장의 '한 입 베어 물기'와 '이어버드 빌리기' 비유는 매우 절묘하다. 우리는 친구의 음식을 맛보기 위해 한 입을 빌려 와서 자기 입 안에서 그 맛을 느낀다. 마찬가지로 친구의 노래를 듣기 위해 이어버드를 빌려 자기 귀로 듣는다. 즉, '내가 직접 내 몸으로 경험'하는 행위이다. 공감도 같은 메커니즘이라는 것이 본문의 핵심 통찰이다.
+</div>
+</div>
+
+<div class="tab-content" id="p3-t6">
+<h3>변형문제 (Interactive Quiz)</h3>
+
+<div class="quiz-q" id="q3-1">
+<div class="q-title">1. 윗글의 주제로 가장 적절한 것은?</div>
+<div class="q-options">
+<button class="q-opt" onclick="check('q3-1',this,false,'본문은 뇌의 한계를 보완하는 신체의 역할을 강조하며, 뇌의 우월성이 아니다.')"><span class="onum">①</span>인간의 감정 인식에서 뇌의 우월한 능력</button>
+<button class="q-opt" onclick="check('q3-1',this,false,'얼굴 표정만으로는 추상적 인식만 얻는다고 본문에 제시된다.')"><span class="onum">②</span>얼굴 표정 해석을 통한 감정 인식의 효과</button>
+<button class="q-opt" onclick="check('q3-1',this,true,'본문은 \‘the body is the bridge\’라는 표현으로 신체가 공감의 통로임을 핵심 주제로 제시한다.')"><span class="onum">③</span>타인의 감정을 이해하는 다리로서의 신체</button>
+<button class="q-opt" onclick="check('q3-1',this,false,'언어 의사소통의 한계는 본문의 일부 근거일 뿐 핵심 주제가 아니다.')"><span class="onum">④</span>언어를 통한 의사소통의 본질적 한계</button>
+<button class="q-opt" onclick="check('q3-1',this,false,'본문은 무의식적 모방을 다루지만 사회적 행동의 진화는 다루지 않는다.')"><span class="onum">⑤</span>모방 행동의 사회적 진화와 발달</button>
+</div>
+<div class="q-fb" id="fb-q3-1"></div>
+<button class="q-reset" onclick="resetQuiz('q3-1')">↺ 다시 풀기</button>
+</div>
+
+<div class="quiz-q" id="q3-2">
+<div class="q-title">2. 다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+<div class="q-stem en">We bring other people&apos;s feelings onboard, and the body is the _______________.</div>
+<div class="q-options">
+<button class="q-opt" onclick="check('q3-2',this,false,'장벽(barrier)은 본문의 주장과 반대이다.')"><span class="onum">①</span>barrier</button>
+<button class="q-opt" onclick="check('q3-2',this,false,'거울(mirror)은 비유로는 가능하지만 본문에 등장하지 않는다.')"><span class="onum">②</span>mirror</button>
+<button class="q-opt" onclick="check('q3-2',this,true,'본문 ⑧에 \‘the body is the bridge\’로 직접 명시되며, 신체가 자기와 타인을 연결하는 다리라는 비유가 핵심이다.')"><span class="onum">③</span>bridge</button>
+<button class="q-opt" onclick="check('q3-2',this,false,'한계(limit)는 본문의 주장과 반대이다.')"><span class="onum">④</span>limit</button>
+<button class="q-opt" onclick="check('q3-2',this,false,'필터(filter)는 본문에 등장하지 않는다.')"><span class="onum">⑤</span>filter</button>
+</div>
+<div class="q-fb" id="fb-q3-2"></div>
+<button class="q-reset" onclick="resetQuiz('q3-2')">↺ 다시 풀기</button>
+</div>
+
+<div class="quiz-q" id="q3-3">
+<div class="q-title">3. 다음 밑줄 친 부분 중 어법상 어색한 것은?</div>
+<div class="q-stem en"><u>①Becoming</u> aware of our internal sensations can help us <u>②handle</u> our own emotions. Perhaps more surprisingly, the body&apos;s interoceptive faculty can also bring us into closer contact with other people&apos;s emotions. That&apos;s because the brain, on its own, has no direct access to the contents of other people&apos;s minds, no way to feel <u>③that</u> others are feeling. Interpreting others&apos; spoken words and facial expressions may yield only a coolly abstract sense of the emotions that <u>④stir</u> within. The body acts as a critical conduit, <u>⑤supplying</u> the brain with the visceral information it lacks.</div>
+<div class="q-options">
+<button class="q-opt" onclick="check('q3-3',this,false,'동명사 주어 Becoming은 적절하다.')"><span class="onum">①</span>Becoming</button>
+<button class="q-opt" onclick="check('q3-3',this,false,'help + O + 동사원형 (handle) 구조는 적절하다.')"><span class="onum">②</span>handle</button>
+<button class="q-opt" onclick="check('q3-3',this,true,'feel의 목적어로 \‘(타인이 느끼는) 그것\’을 받는 명사절이 필요하므로 that → what이 되어야 한다. (선행사 포함 관계대명사)')"><span class="onum">③</span>that</button>
+<button class="q-opt" onclick="check('q3-3',this,false,'관계대명사 that의 선행사 emotions(복수)와 일치하는 동사 stir로 적절하다.')"><span class="onum">④</span>stir</button>
+<button class="q-opt" onclick="check('q3-3',this,false,'분사구문 supplying (의미상 주어 = body)로 적절하다.')"><span class="onum">⑤</span>supplying</button>
+</div>
+<div class="q-fb" id="fb-q3-3"></div>
+<button class="q-reset" onclick="resetQuiz('q3-3')">↺ 다시 풀기</button>
+</div>
+
+<div class="quiz-q" id="q3-4">
+<div class="q-title">4. 윗글의 내용과 일치하지 <u>않는</u> 것은?</div>
+<div class="q-options">
+<button class="q-opt" onclick="check('q3-4',this,false,'첫 문장의 핵심 내용으로 일치한다.')"><span class="onum">①</span>내적 감각을 인식하는 것은 자신의 감정을 다루는 데 도움이 될 수 있다.</button>
+<button class="q-opt" onclick="check('q3-4',this,false,'세 번째 문장에 \‘no direct access\’로 명시되어 있다.')"><span class="onum">②</span>뇌는 그 자체로 타인의 마음 내용에 직접 접근할 수 없다.</button>
+<button class="q-opt" onclick="check('q3-4',this,true,'본문은 \‘subtly and unconsciously mimic\’(미묘하고 무의식적으로 모방)이라고 명시했다. 의식적·의도적이 아니다.')"><span class="onum">③</span>우리는 타인의 표정과 몸짓을 의식적이고 의도적으로 모방한다.</button>
+<button class="q-opt" onclick="check('q3-4',this,false,'\‘the body is the bridge\’에서 신체가 통로(다리) 역할을 한다.')"><span class="onum">④</span>신체는 뇌가 결여한 내장 감각 정보를 뇌에 공급한다.</button>
+<button class="q-opt" onclick="check('q3-4',this,false,'마지막 문장의 비유로 일치한다.')"><span class="onum">⑤</span>타인의 감정을 이해하는 것은 친구의 음식을 한 입 맛보는 것에 비유된다.</button>
+</div>
+<div class="q-fb" id="fb-q3-4"></div>
+<button class="q-reset" onclick="resetQuiz('q3-4')">↺ 다시 풀기</button>
+</div>
+
+<div class="quiz-q" id="q3-5">
+<div class="q-title">5. 다음 글 다음에 이어질 글의 순서로 가장 적절한 것은?</div>
+<div class="q-stem">Becoming aware of our internal sensations can help us handle our own emotions. Perhaps more surprisingly, the body&apos;s interoceptive faculty can also bring us into closer contact with other people&apos;s emotions.<br><br>(A) The body acts as a critical conduit, supplying the brain with the visceral information it lacks. It does so in this way: When interacting with other people, we subtly and unconsciously mimic their facial expressions, gestures, posture, and vocal pitch.<br><br>(B) That&apos;s because the brain, on its own, has no direct access to the contents of other people&apos;s minds, no way to feel what others are feeling. Interpreting others&apos; spoken words and facial expressions may yield only a coolly abstract sense of the emotions that stir within.<br><br>(C) Then, via the interoception of our own bodies&apos; signals, we perceive what the other person is feeling because we feel it in ourselves. We bring other people&apos;s feelings onboard, and the body is the bridge.</div>
+<div class="q-options">
+<button class="q-opt" onclick="check('q3-5',this,false,'(A)의 해결책 제시 전에 (B)의 문제 제시가 와야 자연스럽다.')"><span class="onum">①</span>(A) - (B) - (C)</button>
+<button class="q-opt" onclick="check('q3-5',this,false,'(C)의 결론은 (A)의 메커니즘 설명 다음에 와야 한다.')"><span class="onum">②</span>(A) - (C) - (B)</button>
+<button class="q-opt" onclick="check('q3-5',this,true,'(B) 뇌의 한계라는 문제 제시 → (A) 신체가 통로로서 모방을 통해 정보 공급 → (C) 내수용 감각으로 인식, 신체가 다리. 가장 자연스러운 흐름이다.')"><span class="onum">③</span>(B) - (A) - (C)</button>
+<button class="q-opt" onclick="check('q3-5',this,false,'(C)의 결론은 마지막에 위치해야 한다.')"><span class="onum">④</span>(B) - (C) - (A)</button>
+<button class="q-opt" onclick="check('q3-5',this,false,'(C)의 결론을 도입 직후에 둘 수 없다.')"><span class="onum">⑤</span>(C) - (A) - (B)</button>
+</div>
+<div class="q-fb" id="fb-q3-5"></div>
+<button class="q-reset" onclick="resetQuiz('q3-5')">↺ 다시 풀기</button>
+</div>
+
+<div class="essay-q">
+<div class="et">[서술형 1] 빈칸 요약</div>
+<div class="es">다음은 윗글의 요지를 한 문장으로 요약한 것이다. 빈칸 (A), (B)에 들어갈 말을 본문에서 찾아 쓰시오.</div>
+<div class="ec">조건: 본문에 등장한 단어를 그대로 활용할 것</div>
+<div class="es"><i>By unconsciously (A) ___________ others&apos; expressions and using our body&apos;s (B) ___________ signals, we come to feel and understand other people&apos;s emotions.</i></div>
+<textarea placeholder="(A): &#10;(B): "></textarea>
+<button class="ans-toggle" onclick="toggleAns('ans3-1')">▼ 모범답안 보기</button>
+<div class="model-ans" id="ans3-1">
+<b>(A)</b> mimicking &nbsp;|&nbsp; <b>(B)</b> interoceptive (또는 visceral)<br>
+<b>해설:</b> 본문 ⑥의 "we subtly and unconsciously mimic their facial expressions"와 ⑦의 "via the interoception of our own bodies&apos; signals" 부분이 단서이다.
+</div>
+</div>
+
+<div class="essay-q">
+<div class="et">[서술형 2] 영작 서술형</div>
+<div class="es">본문에서 신체가 어떻게 '공감의 다리(the bridge)' 역할을 하는지 그 메커니즘을 영어로 서술하시오.</div>
+<div class="ec">조건: 완전한 영어 문장 2~3개, 40~50단어 내외, "mimic", "interoception", "feel" 세 단어 이상 포함</div>
+<textarea placeholder="답안을 작성하세요."></textarea>
+<button class="ans-toggle" onclick="toggleAns('ans3-2')">▼ 모범답안 보기</button>
+<div class="model-ans" id="ans3-2">
+<b>모범답안 예시:</b><br>
+When interacting with others, we subtly and unconsciously mimic their facial expressions, gestures, posture, and vocal pitch. Then, through the interoception of our own bodies&apos; signals, we feel in ourselves what they are feeling. In this way, the body bridges our minds with theirs.<br><br>
+<b>핵심 키워드:</b> mimic / facial expressions / interoception / feel in ourselves / body / bridge
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="passage" id="p4">
+<div class="passage-header">
+<h2>13-4. Technology and Dehumanization</h2>
+<div class="subj">기술의 과잉 확장과 인간성 상실</div>
+</div>
+<div class="tabs">
+<button class="tab-btn active" id="p4-tb0" onclick="showTab(4,0)">전문</button>
+<button class="tab-btn" id="p4-tb1" onclick="showTab(4,1)">문장분석</button>
+<button class="tab-btn" id="p4-tb2" onclick="showTab(4,2)">핵심단어·표현</button>
+<button class="tab-btn" id="p4-tb3" onclick="showTab(4,3)">전문해석</button>
+<button class="tab-btn" id="p4-tb4" onclick="showTab(4,4)">주제·요지</button>
+<button class="tab-btn" id="p4-tb5" onclick="showTab(4,5)">배경지식</button>
+<button class="tab-btn" id="p4-tb6" onclick="showTab(4,6)">변형문제</button>
+</div>
+
+<div class="tab-content active" id="p4-t0">
+<h3>전문 (Original Text)</h3>
+<div class="full-passage-box">
+The strongest criticisms of the overextension of technology involve claims of dehumanization, and these arguments are not new. Canadian philosopher of the electronic age, Marshall McLuhan was primarily a techno-utopian, but he was also a critical thinker, who cautioned decades ago against too much human extension into technology. McLuhan famously claimed that every media extension of man is an amputation. For example, once we have a car, we don&apos;t walk to the shops any more; once we have a computer hard-drive, we don&apos;t have to remember things; and now that we have personal GPS (Global Positioning System) on our cell phones, no one can find their way about without it. Based on McLuhan&apos;s philosophy, we are becoming post-literate because we rely on screens full of pictures, rather than print media, such as books. It is thus possible that extensions of human faculties, through techno- and bio-enhancement, will bring about arrested development in the natural evolution of higher human faculties.
+</div>
+</div>
+
+<div class="tab-content" id="p4-t1">
+<h3>문장분석 (Sentence Analysis)</h3>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">①</span>The strongest criticisms of the overextension of technology involve claims of dehumanization, and these arguments are not new.</div>
+<div class="sent-slash">The strongest criticisms / of the overextension of technology / involve claims of dehumanization, / and these arguments are not new.</div>
+<div class="sent-ko">가장 강한 비판들은 / 기술의 과도한 확장에 대한 / 비인간화에 대한 주장을 포함한다, / 그리고 이러한 주장들은 새롭지 않다.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">최상급 + 명사 (the strongest)</span> ▶ <span class="gex">The strongest criticisms</span> ★ <span class="gpoint">strong → strongest, the + 최상급</span></div>
+<div class="gram-item">◆ <span class="gtitle">전치사구의 후치 수식</span> ▶ <span class="gex">criticisms of the overextension of technology</span> ★ <span class="gpoint">of + 명사가 앞 명사를 한정·수식</span></div>
+<div class="gram-item">◆ <span class="gtitle">등위접속사 and (절 병렬)</span> ▶ <span class="gex">… involve claims …, and these arguments are …</span> ★ <span class="gpoint">두 독립절을 연결</span></div>
+</div>
+</div>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">②</span>Canadian philosopher of the electronic age, Marshall McLuhan was primarily a techno-utopian, but he was also a critical thinker, who cautioned decades ago against too much human extension into technology.</div>
+<div class="sent-slash">Canadian philosopher of the electronic age, / Marshall McLuhan / was primarily a techno-utopian, / but he was also a critical thinker, / who cautioned decades ago / against too much human extension into technology.</div>
+<div class="sent-ko">전자 시대의 캐나다 철학자, / 마셜 매클루언은 / 주로 기술 유토피아주의자였다, / 그러나 그는 또한 비판적 사상가이기도 했다, / 그는 수십 년 전에 경고했다 / 인간의 기술로의 너무 지나친 확장에 대해.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">동격 명사구 (콤마 동격)</span> ▶ <span class="gex">Canadian philosopher … , Marshall McLuhan …</span> ★ <span class="gpoint">앞 명사구가 주어 McLuhan을 부연 설명</span></div>
+<div class="gram-item">◆ <span class="gtitle">관계대명사 who (계속적 용법)</span> ▶ <span class="gex">a critical thinker, who cautioned …</span> ★ <span class="gpoint">콤마 + who, 추가 정보 / and he와 유사</span></div>
+<div class="gram-item">◆ <span class="gtitle">caution against (~에 대해 경고하다)</span> ▶ <span class="gex">cautioned against too much human extension</span> ★ <span class="gpoint">warn against와 유사 / 전치사 against 주의</span></div>
+<div class="gram-item">◆ <span class="gtitle">시간 명사구 부사 (decades ago)</span> ▶ <span class="gex">cautioned decades ago</span> ★ <span class="gpoint">단위 + ago = 시간 부사 / 전치사 없이</span></div>
+</div>
+</div>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">③</span>McLuhan famously claimed that every media extension of man is an amputation.</div>
+<div class="sent-slash">McLuhan famously claimed / that every media extension of man / is an amputation.</div>
+<div class="sent-ko">매클루언은 유명하게 주장했다 / 인간의 모든 미디어적 확장은 / 절단(切斷)이라고.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">접속사 that 명사절 (목적어)</span> ▶ <span class="gex">claimed that every media extension … is …</span> ★ <span class="gpoint">동사 claimed의 목적어 절</span></div>
+<div class="gram-item">◆ <span class="gtitle">every + 단수 명사 + 단수 동사</span> ▶ <span class="gex">every media extension … is an amputation</span> ★ <span class="gpoint">every 뒤 단수 명사 / 단수 동사 일치 (어법 빈출)</span></div>
+<div class="gram-item">◆ <span class="gtitle">부사 famously (수식)</span> ▶ <span class="gex">McLuhan famously claimed</span> ★ <span class="gpoint">동사 claimed를 수식 / '유명하게도'</span></div>
+</div>
+</div>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">④</span>For example, once we have a car, we don&apos;t walk to the shops any more; once we have a computer hard-drive, we don&apos;t have to remember things; and now that we have personal GPS (Global Positioning System) on our cell phones, no one can find their way about without it.</div>
+<div class="sent-slash">For example, / once we have a car, / we don&apos;t walk to the shops any more; / once we have a computer hard-drive, / we don&apos;t have to remember things; / and now that we have personal GPS / on our cell phones, / no one can find their way about / without it.</div>
+<div class="sent-ko">예를 들어, / 자동차를 갖게 되면, / 우리는 더 이상 가게에 걸어가지 않는다; / 컴퓨터 하드드라이브를 갖게 되면, / 우리는 사물들을 기억할 필요가 없다; / 그리고 이제 개인 GPS를 가지게 되었기 때문에 / 휴대전화에, / 아무도 길을 찾을 수 없다 / 그것 없이는.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">접속사 once (일단 ~하면)</span> ▶ <span class="gex">once we have a car / once we have a computer hard-drive</span> ★ <span class="gpoint">'as soon as'와 유사 / 조건·시간</span></div>
+<div class="gram-item">◆ <span class="gtitle">접속사 now that (~이므로, 이제 ~이니)</span> ▶ <span class="gex">now that we have personal GPS</span> ★ <span class="gpoint">이유의 접속사 / since와 유사 / 현재 사실</span></div>
+<div class="gram-item">◆ <span class="gtitle">don&apos;t have to (~할 필요가 없다)</span> ▶ <span class="gex">we don&apos;t have to remember things</span> ★ <span class="gpoint">must not(금지)과 구별 / 불필요</span></div>
+<div class="gram-item">◆ <span class="gtitle">no one + 단수 동사 + their (대명사)</span> ▶ <span class="gex">no one can find their way</span> ★ <span class="gpoint">현대 영어에서 성중립적 their 사용 가능</span></div>
+<div class="gram-item">◆ <span class="gtitle">세미콜론(;) 의미 단위 분리</span> ▶ <span class="gex">… any more; once we have …; and now that …</span> ★ <span class="gpoint">병렬되는 세 사례를 세미콜론으로 구분</span></div>
+</div>
+</div>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">⑤</span>Based on McLuhan&apos;s philosophy, we are becoming post-literate because we rely on screens full of pictures, rather than print media, such as books.</div>
+<div class="sent-slash">Based on McLuhan&apos;s philosophy, / we are becoming post-literate / because we rely on screens / full of pictures, / rather than print media, / such as books.</div>
+<div class="sent-ko">매클루언의 철학에 따르면, / 우리는 탈문자(脫文字) 시대가 되어가고 있다 / 우리가 화면에 의존하기 때문에 / 그림으로 가득 찬, / 인쇄 매체보다는 / 책과 같은.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">분사구문 (수동 Based on)</span> ▶ <span class="gex">Based on McLuhan&apos;s philosophy</span> ★ <span class="gpoint">'~에 따르면, ~에 근거하여' 관용 표현</span></div>
+<div class="gram-item">◆ <span class="gtitle">현재진행 (변화 진행)</span> ▶ <span class="gex">we are becoming post-literate</span> ★ <span class="gpoint">become의 진행형 / 점진적 변화</span></div>
+<div class="gram-item">◆ <span class="gtitle">형용사 후치 수식 (full of)</span> ▶ <span class="gex">screens full of pictures</span> ★ <span class="gpoint">screens (which are) full of …에서 which are 생략</span></div>
+<div class="gram-item">◆ <span class="gtitle">rather than + 명사 (대조)</span> ▶ <span class="gex">rather than print media</span> ★ <span class="gpoint">'~보다는, ~ 대신에'</span></div>
+<div class="gram-item">◆ <span class="gtitle">such as + 예시 (~과 같은)</span> ▶ <span class="gex">such as books</span> ★ <span class="gpoint">like와 유사 / 예시 도입</span></div>
+</div>
+</div>
+
+<div class="sentence-block">
+<div class="sent-en"><span class="sent-num">⑥</span>It is thus possible that extensions of human faculties, through techno- and bio-enhancement, will bring about arrested development in the natural evolution of higher human faculties.</div>
+<div class="sent-slash">It is thus possible / that extensions of human faculties, / through techno- and bio-enhancement, / will bring about / arrested development / in the natural evolution / of higher human faculties.</div>
+<div class="sent-ko">따라서 ~이 가능하다 / 인간 능력의 확장이, / 기술·생명공학적 향상을 통한, / 초래할 것이 / 발달 정지를 / 자연적 진화에서 / 더 높은 인간 능력의.</div>
+<div class="gram-list">
+<div class="gram-item">◆ <span class="gtitle">가주어 It ~ 진주어 that절</span> ▶ <span class="gex">It is thus possible that extensions … will bring about …</span> ★ <span class="gpoint">It = that절 / 어법·구조 출제 빈출</span></div>
+<div class="gram-item">◆ <span class="gtitle">bring about (~을 초래하다, 야기하다)</span> ▶ <span class="gex">will bring about arrested development</span> ★ <span class="gpoint">cause, lead to와 유사 / 결과 도입</span></div>
+<div class="gram-item">◆ <span class="gtitle">과거분사 형용사 (arrested)</span> ▶ <span class="gex">arrested development</span> ★ <span class="gpoint">'정지된, 멈춘' 수동 의미 / development를 수식</span></div>
+<div class="gram-item">◆ <span class="gtitle">접두사 hyphen 결합 (techno- and bio-)</span> ▶ <span class="gex">techno- and bio-enhancement</span> ★ <span class="gpoint">두 접두사가 enhancement를 공유 / 'and' 앞뒤 hyphen 처리</span></div>
+<div class="gram-item">◆ <span class="gtitle">부사 thus (그러므로)</span> ▶ <span class="gex">It is thus possible</span> ★ <span class="gpoint">therefore, hence와 유사 / 결론 도입</span></div>
+</div>
+</div>
+
+</div>
+
+<div class="tab-content" id="p4-t2">
+<h3>핵심단어 및 표현</h3>
+<div class="vocab-list">
+<div class="vocab-item"><span class="vocab-en">overextension</span><span class="vocab-pos">n.</span><span class="vocab-ko">과도한 확장, 지나친 확대</span><div class="vocab-deriv">extend (v.) 확장하다 / extension (n.) 확장</div></div>
+<div class="vocab-item"><span class="vocab-en">criticism</span><span class="vocab-pos">n.</span><span class="vocab-ko">비판, 비평</span><div class="vocab-deriv">criticize (v.) 비판하다 / critical (adj.) 비판적인</div></div>
+<div class="vocab-item"><span class="vocab-en">claim</span><span class="vocab-pos">n./v.</span><span class="vocab-ko">주장(하다)</span><div class="vocab-deriv">claimant (n.) 주장하는 사람</div></div>
+<div class="vocab-item"><span class="vocab-en">dehumanization</span><span class="vocab-pos">n.</span><span class="vocab-ko">비인간화, 인간성 상실</span><div class="vocab-deriv">dehumanize (v.) 비인간화하다 / human (n./adj.) 인간(의)</div></div>
+<div class="vocab-item"><span class="vocab-en">techno-utopian</span><span class="vocab-pos">n./adj.</span><span class="vocab-ko">기술 유토피아주의자(의)</span><div class="vocab-deriv">utopia (n.) 이상향 / dystopian (반대 개념)</div></div>
+<div class="vocab-item"><span class="vocab-en">caution against</span><span class="vocab-pos">phr.</span><span class="vocab-ko">~에 대해 경고하다</span><div class="vocab-deriv">caution (n./v.) 주의(시키다) / cautious (adj.) 신중한</div></div>
+<div class="vocab-item"><span class="vocab-en">extension</span><span class="vocab-pos">n.</span><span class="vocab-ko">확장, 연장(부)</span><div class="vocab-deriv">extend (v.) 확장하다 / extensive (adj.) 광범위한</div></div>
+<div class="vocab-item"><span class="vocab-en">amputation</span><span class="vocab-pos">n.</span><span class="vocab-ko">절단, (신체의) 잘라냄</span><div class="vocab-deriv">amputate (v.) 절단하다 / amputee (n.) 절단 환자</div></div>
+<div class="vocab-item"><span class="vocab-en">once</span><span class="vocab-pos">conj.</span><span class="vocab-ko">일단 ~하면, ~하자마자</span><div class="vocab-deriv">as soon as와 유사</div></div>
+<div class="vocab-item"><span class="vocab-en">now that</span><span class="vocab-pos">conj.</span><span class="vocab-ko">~이므로, 이제 ~이니</span><div class="vocab-deriv">since (~이기 때문에)와 유사 / 현재 사실 강조</div></div>
+<div class="vocab-item"><span class="vocab-en">find one&apos;s way about</span><span class="vocab-pos">phr.</span><span class="vocab-ko">길을 찾아 다니다</span><div class="vocab-deriv">find one&apos;s way (길을 찾다)</div></div>
+<div class="vocab-item"><span class="vocab-en">post-literate</span><span class="vocab-pos">adj.</span><span class="vocab-ko">탈문자의, 문자 이후 시대의</span><div class="vocab-deriv">literate (adj.) 글을 읽고 쓸 줄 아는 / illiterate (반의어)</div></div>
+<div class="vocab-item"><span class="vocab-en">rely on</span><span class="vocab-pos">phr.</span><span class="vocab-ko">~에 의존하다</span><div class="vocab-deriv">reliance (n.) 의존 / reliable (adj.) 믿을 만한</div></div>
+<div class="vocab-item"><span class="vocab-en">print media</span><span class="vocab-pos">phr.</span><span class="vocab-ko">인쇄 매체</span><div class="vocab-deriv">media (n.) 매체 (medium의 복수)</div></div>
+<div class="vocab-item"><span class="vocab-en">faculty</span><span class="vocab-pos">n.</span><span class="vocab-ko">능력, 기능</span><div class="vocab-deriv">human faculties (인간의 능력) / mental faculty (정신 능력)</div></div>
+<div class="vocab-item"><span class="vocab-en">enhancement</span><span class="vocab-pos">n.</span><span class="vocab-ko">향상, 강화</span><div class="vocab-deriv">enhance (v.) 향상시키다 / enhanced (adj.) 강화된</div></div>
+<div class="vocab-item"><span class="vocab-en">bring about</span><span class="vocab-pos">phr.</span><span class="vocab-ko">초래하다, 야기하다</span><div class="vocab-deriv">cause, lead to와 유사</div></div>
+<div class="vocab-item"><span class="vocab-en">arrested development</span><span class="vocab-pos">phr.</span><span class="vocab-ko">발달 정지, 멈춘 발달</span><div class="vocab-deriv">arrest (v.) 멈추다, 체포하다 / arrested (adj.) 정지된</div></div>
+<div class="vocab-item"><span class="vocab-en">evolution</span><span class="vocab-pos">n.</span><span class="vocab-ko">진화, 발전</span><div class="vocab-deriv">evolve (v.) 진화하다 / evolutionary (adj.) 진화의</div></div>
+<div class="vocab-item"><span class="vocab-en">primarily</span><span class="vocab-pos">adv.</span><span class="vocab-ko">주로, 본질적으로</span><div class="vocab-deriv">primary (adj.) 주된, 일차적인</div></div>
+</div>
+</div>
+
+<div class="tab-content" id="p4-t3">
+<h3>전문해석</h3>
+<div class="translation">
+기술의 과도한 확장에 대한 가장 강한 비판들은 비인간화에 대한 주장을 포함하며, 이러한 주장은 새로운 것이 아니다. 전자 시대의 캐나다 철학자였던 마셜 매클루언은 본질적으로 기술 유토피아주의자였지만, 또한 비판적 사상가이기도 했으며, 그는 수십 년 전에 인간이 기술 속으로 너무 지나치게 확장되는 것에 대해 경고했다. 매클루언은 인간의 모든 미디어적 확장은 (신체의) 절단(切斷)이라고 유명하게 주장했다. 예를 들어, 우리가 자동차를 가지게 되면 더 이상 가게에 걸어가지 않으며, 컴퓨터 하드드라이브를 가지게 되면 사물을 기억할 필요가 없어지고, 이제 휴대전화에 개인 GPS(위성 위치 확인 시스템)를 가지게 되었기 때문에, 그것 없이는 아무도 길을 찾지 못한다. 매클루언의 철학에 따르면, 우리는 책과 같은 인쇄 매체보다는 그림으로 가득한 화면에 의존하기 때문에 점점 탈문자(post-literate) 시대가 되어가고 있다. 따라서 기술적·생명공학적 향상을 통한 인간 능력의 확장은, 더 높은 차원의 인간 능력이 자연스럽게 진화해 가는 과정에서 발달의 정지를 초래할 가능성이 있다.
+</div>
+</div>
+
+<div class="tab-content" id="p4-t4">
+<h3>주제 · 요지 · 구조</h3>
+<div class="theme-block"><h4>Topic · 주제</h4><div class="content">매클루언의 사상을 통해 본 기술의 과잉 확장이 초래하는 인간 능력의 비인간화와 발달 정지</div></div>
+<div class="theme-block"><h4>Main Idea · 요지</h4><div class="content">매클루언이 경고했듯 모든 미디어적 확장은 인간 능력의 절단을 의미하며, 자동차·하드드라이브·GPS 같은 일상적 사례에서 알 수 있듯 우리는 이미 탈문자 시대로 향하고 있다. 따라서 기술·생명공학적 향상은 더 높은 인간 능력의 자연스러운 진화를 정지시킬 가능성이 있다.</div></div>
+<div class="theme-block"><h4>Structure · 구조 흐름</h4>
+<div class="struct-flow">
+<div class="struct-step"><b>도입 (①)</b> — 기술 과잉 확장에 대한 비판이 새롭지 않다는 문제 제기</div>
+<div class="struct-step"><b>전개 1 — 권위 인용 (②③)</b> — 매클루언의 이중적 입장(기술 낙관 + 비판) 소개와 핵심 명제 제시: '미디어 확장 = 절단'</div>
+<div class="struct-step"><b>전개 2 — 사례 (④⑤)</b> — 자동차·하드드라이브·GPS 사례 / 그림 화면 의존으로 인한 탈문자 시대화</div>
+<div class="struct-step"><b>결론 (⑥)</b> — 따라서 기술·생명공학적 향상은 인간의 더 높은 능력의 자연 진화에 발달 정지를 초래할 수 있음</div>
+</div></div>
+</div>
+
+<div class="tab-content" id="p4-t5">
+<h3>지문의 배경지식</h3>
+<div class="bg-block">
+<h4>● 마셜 매클루언(Marshall McLuhan, 1911~1980)</h4>
+캐나다 토론토 대학교의 영문학 교수이자 미디어 이론가. 20세기 후반 미디어 연구의 가장 영향력 있는 사상가로, 『구텐베르크 은하계』(1962), 『미디어의 이해』(1964) 등을 저술했다. "The medium is the message(미디어가 곧 메시지이다)", "Global village(지구촌)" 등의 명언으로 유명하다.
+
+<h4>● "미디어는 인간의 확장이다(extensions of man)"</h4>
+매클루언의 핵심 명제. 모든 미디어와 도구는 인간 신체·정신 능력의 '확장(extension)'이라는 것이다. 예: 옷=피부의 확장, 바퀴=발의 확장, 책=눈의 확장, 컴퓨터=뇌의 확장. 그러나 본문에서 보듯, 매클루언은 동시에 이러한 확장이 곧 '절단(amputation)'이기도 하다고 보았다. 자동차가 다리를 대신하면 다리는 약화되며, 하드드라이브가 기억을 대신하면 기억력이 쇠퇴한다.
+
+<h4>● Techno-utopianism vs Techno-pessimism</h4>
+기술 유토피아주의는 기술이 모든 인간 문제를 해결하리라 보는 낙관적 입장이다. 매클루언은 기본적으로 이쪽에 가까웠지만, 동시에 기술이 인간의 본래적 능력을 위축시킬 수 있다는 비판적 통찰도 함께 지녔다. 본문은 그의 양면적 입장 중 비판적 측면에 초점을 맞춘다.
+
+<h4>● Post-literate Society (탈문자 사회)</h4>
+인쇄 매체에 기반한 문자 중심 문명이 영상·이미지·음성 중심 문명으로 전환되는 현상을 가리키는 개념이다. 매클루언은 TV 시대부터 이미 이 변화를 예측했으며, 오늘날 유튜브·틱톡·인스타그램 시대에는 더욱 가속화되었다. 책의 선형적·논리적 사고가 영상의 즉각적·감각적 인지에 자리를 내주고 있다는 우려가 그 핵심이다.
+
+<h4>● Techno-enhancement &amp; Bio-enhancement</h4>
+기술적 향상은 외부 도구·장치(스마트폰, AI 비서, 외골격 등)로 능력을 증강하는 것이고, 생명공학적 향상은 유전자 편집(CRISPR), 뇌-컴퓨터 인터페이스(Neuralink), 약물 인지 강화 등 신체·뇌 자체를 변형하는 방법이다. 본문의 결론은 이 두 가지 모두가 인간 본래 능력의 자연 진화를 방해할 수 있음을 경고한다.
+
+<h4>● Arrested Development (발달 정지)</h4>
+원래 의학·심리학 용어로 '특정 단계에서 멈춘 발달'을 의미한다. 본문에서는 인간이 자연적으로 더 높은 능력으로 진화해 가야 할 길이 외부 기술 의존으로 인해 멈출 수 있음을 경고하는 핵심 표현이다.
+</div>
+</div>
+
+<div class="tab-content" id="p4-t6">
+<h3>변형문제 (Interactive Quiz)</h3>
+
+<div class="quiz-q" id="q4-1">
+<div class="q-title">1. 윗글의 주제로 가장 적절한 것은?</div>
+<div class="q-options">
+<button class="q-opt" onclick="check('q4-1',this,false,'본문은 기술 낙관과 비판 모두를 다루지만 핵심은 비판 측면이며, 기술 낙관 자체가 주제는 아니다.')"><span class="onum">①</span>전자 시대 매클루언의 기술 낙관주의 사상</button>
+<button class="q-opt" onclick="check('q4-1',this,false,'GPS는 사례 중 하나일 뿐이다.')"><span class="onum">②</span>GPS와 휴대전화 기술의 발달 과정</button>
+<button class="q-opt" onclick="check('q4-1',this,true,'본문은 기술의 과잉 확장이 인간 능력의 절단·발달 정지를 초래할 수 있다는 매클루언적 우려를 핵심으로 다룬다.')"><span class="onum">③</span>기술의 과잉 확장이 초래하는 인간 능력의 발달 정지</button>
+<button class="q-opt" onclick="check('q4-1',this,false,'본문은 인쇄 매체와 화면을 비교하지만 그 자체가 주제는 아니며, 더 큰 비인간화 논의의 사례이다.')"><span class="onum">④</span>인쇄 매체와 디지털 화면의 장단점 비교</button>
+<button class="q-opt" onclick="check('q4-1',this,false,'생명공학 윤리는 본문에서 결론 부분에 잠깐 언급될 뿐 주제가 아니다.')"><span class="onum">⑤</span>생명공학 발전이 가져올 윤리적 쟁점</button>
+</div>
+<div class="q-fb" id="fb-q4-1"></div>
+<button class="q-reset" onclick="resetQuiz('q4-1')">↺ 다시 풀기</button>
+</div>
+
+<div class="quiz-q" id="q4-2">
+<div class="q-title">2. 다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+<div class="q-stem en">McLuhan famously claimed that every media extension of man is an _______________.</div>
+<div class="q-options">
+<button class="q-opt" onclick="check('q4-2',this,false,'개선(improvement)은 본문이 비판하는 입장이다.')"><span class="onum">①</span>improvement</button>
+<button class="q-opt" onclick="check('q4-2',this,false,'발견(discovery)은 본문 표현이 아니다.')"><span class="onum">②</span>discovery</button>
+<button class="q-opt" onclick="check('q4-2',this,true,'본문 ③에 \‘every media extension of man is an amputation\’으로 직접 명시되어 있으며, 이는 매클루언의 가장 유명한 명제이다.')"><span class="onum">③</span>amputation</button>
+<button class="q-opt" onclick="check('q4-2',this,false,'발명(invention)은 본문 주장과 무관하다.')"><span class="onum">④</span>invention</button>
+<button class="q-opt" onclick="check('q4-2',this,false,'환상(illusion)은 본문 표현이 아니다.')"><span class="onum">⑤</span>illusion</button>
+</div>
+<div class="q-fb" id="fb-q4-2"></div>
+<button class="q-reset" onclick="resetQuiz('q4-2')">↺ 다시 풀기</button>
+</div>
+
+<div class="quiz-q" id="q4-3">
+<div class="q-title">3. 다음 밑줄 친 부분 중 어법상 어색한 것은?</div>
+<div class="q-stem en">McLuhan famously claimed that every media extension of man <u>①are</u> an amputation. For example, once we <u>②have</u> a car, we don&apos;t walk to the shops any more; once we have a computer hard-drive, we don&apos;t have to remember things; and now that we have personal GPS on our cell phones, no one can find <u>③their</u> way about without it. <u>④Based</u> on McLuhan&apos;s philosophy, we are becoming post-literate because we rely on screens <u>⑤full</u> of pictures, rather than print media, such as books.</div>
+<div class="q-options">
+<button class="q-opt" onclick="check('q4-3',this,true,'every + 단수 명사 (every media extension)는 단수 동사를 받아야 하므로 are → is로 고쳐야 한다. (every의 수일치 빈출 출제)')"><span class="onum">①</span>are</button>
+<button class="q-opt" onclick="check('q4-3',this,false,'\‘once + S + V\’ 현재시제로 적절하다.')"><span class="onum">②</span>have</button>
+<button class="q-opt" onclick="check('q4-3',this,false,'no one을 받는 성중립 대명사 their로 현대 영어에서 허용된다.')"><span class="onum">③</span>their</button>
+<button class="q-opt" onclick="check('q4-3',this,false,'\‘Based on …\’은 분사구문 관용 표현으로 적절하다.')"><span class="onum">④</span>Based</button>
+<button class="q-opt" onclick="check('q4-3',this,false,'screens (which are) full of pictures에서 which are 생략된 후치 형용사구로 적절하다.')"><span class="onum">⑤</span>full</button>
+</div>
+<div class="q-fb" id="fb-q4-3"></div>
+<button class="q-reset" onclick="resetQuiz('q4-3')">↺ 다시 풀기</button>
+</div>
+
+<div class="quiz-q" id="q4-4">
+<div class="q-title">4. 윗글의 내용과 일치하지 <u>않는</u> 것은?</div>
+<div class="q-options">
+<button class="q-opt" onclick="check('q4-4',this,false,'본문 첫 문장에 \‘these arguments are not new\’로 명시되어 있다.')"><span class="onum">①</span>기술의 과잉 확장에 대한 비판은 새로운 것이 아니다.</button>
+<button class="q-opt" onclick="check('q4-4',this,false,'본문은 매클루언이 \‘primarily a techno-utopian\’이지만 동시에 비판적 사상가였다고 명시한다.')"><span class="onum">②</span>매클루언은 기본적으로 기술 유토피아주의자였지만 비판적 사상가이기도 했다.</button>
+<button class="q-opt" onclick="check('q4-4',this,false,'본문 ③에 매클루언의 명제가 그대로 명시되어 있다.')"><span class="onum">③</span>매클루언은 모든 미디어적 확장이 절단이라고 주장했다.</button>
+<button class="q-opt" onclick="check('q4-4',this,true,'본문은 \‘screens full of pictures, rather than print media\’로, 우리가 인쇄 매체보다 \‘그림으로 가득한 화면\’에 더 의존한다고 했다. 인쇄 매체에 더 의존한다는 진술은 본문과 정반대이다.')"><span class="onum">④</span>매클루언의 철학에 따르면, 우리는 그림보다 인쇄 매체에 더 의존하고 있다.</button>
+<button class="q-opt" onclick="check('q4-4',this,false,'마지막 문장에 \‘arrested development\’로 명시된 가능성이다.')"><span class="onum">⑤</span>인간 능력의 기술적 확장은 더 높은 인간 능력의 자연 진화를 정지시킬 수 있다.</button>
+</div>
+<div class="q-fb" id="fb-q4-4"></div>
+<button class="q-reset" onclick="resetQuiz('q4-4')">↺ 다시 풀기</button>
+</div>
+
+<div class="quiz-q" id="q4-5">
+<div class="q-title">5. 다음 글 다음에 이어질 글의 순서로 가장 적절한 것은?</div>
+<div class="q-stem">The strongest criticisms of the overextension of technology involve claims of dehumanization, and these arguments are not new.<br><br>(A) For example, once we have a car, we don&apos;t walk to the shops any more; once we have a computer hard-drive, we don&apos;t have to remember things; and now that we have personal GPS on our cell phones, no one can find their way about without it.<br><br>(B) Canadian philosopher of the electronic age, Marshall McLuhan was primarily a techno-utopian, but he was also a critical thinker, who cautioned decades ago against too much human extension into technology. McLuhan famously claimed that every media extension of man is an amputation.<br><br>(C) Based on McLuhan&apos;s philosophy, we are becoming post-literate because we rely on screens full of pictures, rather than print media, such as books. It is thus possible that extensions of human faculties, through techno- and bio-enhancement, will bring about arrested development in the natural evolution of higher human faculties.</div>
+<div class="q-options">
+<button class="q-opt" onclick="check('q4-5',this,false,'(A)의 예시는 (B)의 명제 제시 다음에 와야 한다.')"><span class="onum">①</span>(A) - (B) - (C)</button>
+<button class="q-opt" onclick="check('q4-5',this,false,'(C)의 결론은 마지막에 와야 한다.')"><span class="onum">②</span>(A) - (C) - (B)</button>
+<button class="q-opt" onclick="check('q4-5',this,true,'(B) 매클루언 소개 + 명제 → (A) 자동차/하드드라이브/GPS 구체 사례 → (C) 탈문자화 + 발달 정지 결론. 가장 자연스러운 흐름이다.')"><span class="onum">③</span>(B) - (A) - (C)</button>
+<button class="q-opt" onclick="check('q4-5',this,false,'(C)의 결론을 (A) 사례보다 먼저 두면 흐름이 끊긴다.')"><span class="onum">④</span>(B) - (C) - (A)</button>
+<button class="q-opt" onclick="check('q4-5',this,false,'(C)의 결론을 도입 직후에 둘 수 없다.')"><span class="onum">⑤</span>(C) - (A) - (B)</button>
+</div>
+<div class="q-fb" id="fb-q4-5"></div>
+<button class="q-reset" onclick="resetQuiz('q4-5')">↺ 다시 풀기</button>
+</div>
+
+<div class="essay-q">
+<div class="et">[서술형 1] 빈칸 요약</div>
+<div class="es">다음은 윗글의 요지를 한 문장으로 요약한 것이다. 빈칸 (A), (B)에 들어갈 말을 본문에서 찾아 쓰시오.</div>
+<div class="ec">조건: 본문에 등장한 단어를 그대로 활용할 것</div>
+<div class="es"><i>According to McLuhan, every media extension of man is an (A) ___________, and the overextension of technology may bring about (B) ___________ development in the natural evolution of higher human faculties.</i></div>
+<textarea placeholder="(A): &#10;(B): "></textarea>
+<button class="ans-toggle" onclick="toggleAns('ans4-1')">▼ 모범답안 보기</button>
+<div class="model-ans" id="ans4-1">
+<b>(A)</b> amputation &nbsp;|&nbsp; <b>(B)</b> arrested<br>
+<b>해설:</b> 본문 ③의 "every media extension of man is an amputation"과 마지막 문장 "arrested development in the natural evolution"이 그대로 정답의 근거이다.
+</div>
+</div>
+
+<div class="essay-q">
+<div class="et">[서술형 2] 영작 서술형</div>
+<div class="es">매클루언의 'every media extension of man is an amputation'이라는 주장을 본문의 일상적 예시(자동차, 하드드라이브, GPS) 중 두 가지를 활용하여 영어로 설명하시오.</div>
+<div class="ec">조건: 완전한 영어 문장 2~3개, 35~50단어 내외, "extension", "amputation", 구체적 도구 이름 두 개 이상 포함</div>
+<textarea placeholder="답안을 작성하세요."></textarea>
+<button class="ans-toggle" onclick="toggleAns('ans4-2')">▼ 모범답안 보기</button>
+<div class="model-ans" id="ans4-2">
+<b>모범답안 예시:</b><br>
+McLuhan claims that every media extension of man is an amputation. For example, the car is an extension of our legs, but it amputates our walking ability. Similarly, the computer hard-drive extends our memory while amputating our need to remember things ourselves.<br><br>
+<b>핵심 키워드:</b> media extension / amputation / car / walking ability / hard-drive / memory / GPS / find their way
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+</body>
+</html>
+
